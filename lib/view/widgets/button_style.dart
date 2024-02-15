@@ -4,16 +4,15 @@ import 'package:flutter/material.dart';
 
 class MyButtonStyle extends StatelessWidget{
   final String path;
-  final Size screenSize;
-  final double topSize,weigth,height,radius;
+  final double topSize,weigth,height,radius,leftSize;
   final VoidCallback onPressed;
 
   const MyButtonStyle({
     Key? key,
     required this.path,
-    required this.screenSize,
     required this.weigth,
     required this.height,
+    required this.leftSize,
     required this.topSize,
     required this.radius,
     required this.onPressed
@@ -21,8 +20,9 @@ class MyButtonStyle extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
+    Size screenSize = MediaQuery.of(context).size;
     return Positioned(
-      left: screenSize.width*0.07,
+      left: screenSize.width*leftSize,
       top: screenSize.height*topSize,//0.55
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(

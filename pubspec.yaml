@@ -58,6 +58,11 @@ flutter:
     - assets/images/button_food.png
     - assets/images/button_hz.png
     - assets/images/button_shop.png
+    - assets/images/shope_page.png
+    - assets/images/button_arrow.png
+    - assets/images/button_back.png
+    - assets/pers/pers_1.png
+    - assets/pers/pers_2.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
