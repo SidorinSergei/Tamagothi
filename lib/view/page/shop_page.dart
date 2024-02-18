@@ -7,10 +7,11 @@ class ShopPage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/shope_page.png'),
+            image: AssetImage('assets/images/page/shope_page.png'),
             fit: BoxFit.fill,
           ),
         ),
@@ -18,8 +19,8 @@ class ShopPage extends StatelessWidget{
           child: Stack(
             children: <Widget>[
               TamagothiGallery(),
-              MyButtonStyle(path: 'assets/images/button_arrow.png', weigth: 0.65, height: 0.1,leftSize: 0.275, topSize: 0.855,radius: 17, onPressed: (){}),
-              MyButtonStyle(path: 'assets/images/button_back.png', weigth: 0.2, height: 0.1,leftSize: 0.025, topSize: 0.855,radius: 15, onPressed: (){Navigator.pop(context);})
+              MyButtonStyle(path: 'assets/images/button_arrow.png', width: 0.65, height: 0.1,leftSize: 0.275, topSize: 0.855,radius: 17, onPressed: (){}),
+              MyButtonStyle(path: 'assets/images/button_back.png', width: 0.2, height: 0.1,leftSize: 0.025, topSize: 0.855,radius: 15, onPressed: (){Navigator.pop(context);})
             ],
           ),
         ),

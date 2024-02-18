@@ -8,14 +8,20 @@ class TamagothiGallery extends StatelessWidget {
   ];
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    return PageView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: images.length,
-      itemBuilder: (context,index){
-        return Image.asset(images[index],width: screenSize.width*0.5,height: screenSize.height*0.8,);
-      },
-      );
+    return Container(
+      child: PageView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: images.length,
+        itemBuilder: (context, index) {
+          return Image.asset(
+            images[index],
+            width: screenSize.width * 0.5,
+            height: screenSize.height * 0.8,
+          );
+        },
+      ),
+    );
   }
 }
