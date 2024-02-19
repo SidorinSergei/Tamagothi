@@ -47,3 +47,36 @@ class MyTextField extends StatelessWidget {
     );
   }
 }
+
+class MyText extends StatelessWidget{
+  final double top,left,size;
+  final String text;
+
+  const MyText({Key? key,
+    required this.left,
+    required this.top,
+    required this.size,
+    required this.text,
+  });
+  @override
+  Widget build(BuildContext context){
+    Size screenSize = MediaQuery.of(context).size;
+    return Positioned(
+        left: screenSize.width*left,
+        top: screenSize.height*top,
+      child: Container(
+        width: screenSize.width * 0.5, // Пример задания ширины
+        height: screenSize.height * 0.1, // Пример задания высоты
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: screenSize.width * size,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

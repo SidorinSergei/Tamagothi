@@ -19,11 +19,11 @@ class Registration extends StatelessWidget{
         child: Center(
           child: Stack(
             children: <Widget>[
-              MyTextField(left: 0.29, top: 0.44, width: 0.45, height: 0.045, hintText: 'Email',icon: Icons.person,),
-              MyTextField(left: 0.29, top: 0.52, width: 0.45, height: 0.045, hintText: 'Password',icon: Icons.key,),
-              MyTextField(left: 0.29, top: 0.58, width: 0.45, height: 0.045, hintText: 'Confirmation',icon: Icons.key,),
-              MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.33, height: 0.05,leftSize: 0.355, topSize: 0.645,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/home');},text: 'Зарегистрироваться',),
-              MyTextButton(text: 'Войти', onPressed: (){}, left: 0.39, top: 0.69)
+              MyTextField(left: 0.29, top: 0.42, width: 0.45, height: 0.045, hintText: 'Email',icon: Icons.person,),
+              MyTextField(left: 0.29, top: 0.5, width: 0.45, height: 0.045, hintText: 'Password',icon: Icons.key,),
+              MyTextField(left: 0.29, top: 0.56, width: 0.45, height: 0.045, hintText: 'Confirmation',icon: Icons.key,),
+              MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.62,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/home');},text: 'Зарегистрироваться',),
+              MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.685,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/login');},text: 'Войти',),
             ],
           ),
         ),

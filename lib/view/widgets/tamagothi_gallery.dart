@@ -10,7 +10,12 @@ class TamagothiGallery extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    return Container(
+    return Positioned(
+      top: screenSize.width*0.5,
+      left: screenSize.height*0.05,
+      child:Container(
+      width: screenSize.width*0.8,
+      height: screenSize.height*0.5,
       child: PageView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: images.length,
@@ -22,6 +27,7 @@ class TamagothiGallery extends StatelessWidget {
           );
         },
       ),
+    ),
     );
   }
 }
