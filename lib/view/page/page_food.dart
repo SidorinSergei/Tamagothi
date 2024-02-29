@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
 
-// Модель - содержит данные и бизнес-логику
+// Модель
 class FoodPageModel {
   final String petSkin;
   double foodValue;
 
   FoodPageModel({required this.petSkin, required this.foodValue});
+
   void addFood(double value) {
     foodValue += value;
     if (foodValue > 100) foodValue = 100;
@@ -39,9 +40,10 @@ class _FoodPageState extends State<FoodPage> {
         child: Center(
           child: Stack(
             children: <Widget>[
+              // Питомец
               Positioned(
                 left: screenSize.width * 0.095,
-                top: screenSize.height * 0.23,
+                top: screenSize.height * 0.25,
                 child: Image.asset(
                   widget.model.petSkin,
                   width: screenSize.width * 0.83,
@@ -59,10 +61,9 @@ class _FoodPageState extends State<FoodPage> {
                   height: screenSize.height * 0.23,
                 ),
               ),
-              // Прокручиваемый список еды
               Positioned(
                 left: screenSize.width * 0.1,
-                top: screenSize.height * 0.8,
+                top: screenSize.height * 0.82,
                 width: screenSize.width * 0.8,
                 height: screenSize.height * 0.13,
                 child: ListView(
@@ -80,7 +81,7 @@ class _FoodPageState extends State<FoodPage> {
                       imagePath: 'assets/images/food_2.png',
                       onFoodTap: () {
                         setState(() {
-                          widget.model.addFood(10);
+                          widget.model.addFood(8);
                         });
                       },
                     ),
@@ -88,7 +89,7 @@ class _FoodPageState extends State<FoodPage> {
                       imagePath: 'assets/images/food_3.png',
                       onFoodTap: () {
                         setState(() {
-                          widget.model.addFood(12);
+                          widget.model.addFood(10);
                         });
                       },
                     ),
@@ -96,7 +97,7 @@ class _FoodPageState extends State<FoodPage> {
                       imagePath: 'assets/images/food_4.png',
                       onFoodTap: () {
                         setState(() {
-                          widget.model.addFood(14);
+                          widget.model.addFood(12);
                         });
                       },
                     ),
@@ -104,7 +105,7 @@ class _FoodPageState extends State<FoodPage> {
                       imagePath: 'assets/images/food_5.png',
                       onFoodTap: () {
                         setState(() {
-                          widget.model.addFood(16);
+                          widget.model.addFood(14);
                         });
                       },
                     ),
@@ -130,7 +131,7 @@ class FoodItem extends StatelessWidget {
     return GestureDetector(
       onTap: onFoodTap,
       child: Padding(
-        padding: EdgeInsets.all(1.0),
+        padding: EdgeInsets.all(2.0),
         child: Image.asset(
           imagePath,
           width: 100,
