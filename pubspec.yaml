@@ -69,6 +69,11 @@ flutter:
     - assets/images/washing.png
     - assets/images/sleep.png
     - assets/images/page/food_page.png
+    - assets/images/food_1.png
+    - assets/images/food_2.png
+    - assets/images/food_3.png
+    - assets/images/food_4.png
+    - assets/images/food_5.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

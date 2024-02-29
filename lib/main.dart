@@ -4,8 +4,9 @@ import 'package:tamagothi/view/page/page_food.dart';
 import 'package:tamagothi/view/page/page_reg.dart';
 import 'package:tamagothi/view/page/shop_page.dart';
 import 'package:tamagothi/view/page/page_authoriz.dart';
-
+FoodPageModel model = FoodPageModel(petSkin: 'assets/pers/pers_1.png',foodValue: 20);
 void main() {
+
   runApp(const MyApp());
 }
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
           children: [
             HomePage(),
             ShopPage(),
-            FoodPage(),
+            FoodPage(model: model,),
           ],
         ),
       ),
