@@ -1,14 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tamagothi/view/widgets/button_style.dart';
 import 'package:tamagothi/view/widgets/tamagothi_gallery.dart';
-import 'package:tamagothi/view/widgets/text_field.dart';
+import 'package:tamagothi/presenter/presenter.dart';
 
-class ShopPage extends StatelessWidget{
+class ShopPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context){
+  _ShopPageState createState() => _ShopPageState();
+}
+
+class _ShopPageState extends State<ShopPage> {
+  final ShopPresenter presenter = ShopPresenter();
+
+  @override
+  void initState() {
+    super.initState();
+    presenter.onUpdate = (bool success) {
+      if (!success) {
+        // Показываем SnackBar, если не хватает средств
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Недостаточно средств для покупки скина!'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        setState(() {});
+      }
+    };
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -17,18 +42,15 @@ class ShopPage extends StatelessWidget{
           ),
         ),
         child: Center(
-          child: Stack(
-            children: <Widget>[
-              MyText(left: -0.035, top: 0.01, size: 0.05, text: '100₴'),
-              MyText(left: 0.57, top: 0.01, size: 0.05, text: '97'),
-              TamagothiGallery(),
-              MyText(left: 0.26, top: 0.76, size: 0.1,text: '50₴'),
-              MyButtonStyle(path: 'assets/images/button_arrow.png', width: 0.7, height: 0.1,leftSize: 0.16, topSize: 0.85,radius: 17, onPressed: (){},text: 'Выбрать',),
-              //MyButtonStyle(path: 'assets/images/button_back.png', width: 0.2, height: 0.1,leftSize: 0.025, topSize: 0.855,radius: 15, onPressed: (){Navigator.pop(context);})
-            ],
+          child: TamagothiGallery(
+            images: presenter.model.images,
+            prices: presenter.model.prices,
+            onSkinDoubleTapped: presenter.onSkinDoubleTapped,
+            purchasedSkins: presenter.purchasedSkins,
           ),
         ),
       ),
     );
   }
 }
+
