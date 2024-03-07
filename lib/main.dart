@@ -6,6 +6,7 @@ import 'package:tamagothi/view/page/shop_page.dart';
 import 'package:tamagothi/view/page/page_authoriz.dart';
 FoodPageModel model = FoodPageModel(petSkin: 'assets/pers/pers_1.png',foodValue: 20);
 void main() {
+
   runApp(const MyApp());
 }
 
