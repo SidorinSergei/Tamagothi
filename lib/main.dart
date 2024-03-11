@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tamagothi/minigames/flappy_bird/flappy_bird_main.dart';
 import 'package:tamagothi/view/page/main_page.dart';
 import 'package:tamagothi/view/page/page_food.dart';
+import 'package:tamagothi/view/page/page_minigames.dart';
 import 'package:tamagothi/view/page/page_reg.dart';
 import 'package:tamagothi/view/page/shop_page.dart';
 import 'package:tamagothi/view/page/page_authoriz.dart';
@@ -23,15 +25,17 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => Registration(),
         '/login': (context) => Authorization(),
-      '/home': (context) => Scaffold(
+        '/home': (context) => Scaffold(
         body: PageView(
           children: [
             HomePage(),
             ShopPage(),
-            FoodPage(model: model,),
+            MinigamesPage(),
+            FoodPage(model: model,)
           ],
         ),
       ),
+        '/flappy_bird': (context) => const FlappyBirdMain(),
       },
     );
   }

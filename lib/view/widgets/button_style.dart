@@ -28,7 +28,7 @@ class MyButtonStyle extends StatelessWidget{
       top: screenSize.height*topSize,//0.55
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
+          backgroundColor: Colors.transparent,
           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
