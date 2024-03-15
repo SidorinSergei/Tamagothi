@@ -48,7 +48,7 @@ class HealthScalePainter extends CustomPainter {
       ..strokeWidth = strokeWidth;
 
     final filledArcPaint = Paint()
-      ..shader = LinearGradient(
+      ..shader = const LinearGradient(
         colors: [Colors.green, Colors.yellow, Colors.red],
       ).createShader(Rect.fromCircle(center: center, radius: radius))
       ..style = PaintingStyle.stroke
