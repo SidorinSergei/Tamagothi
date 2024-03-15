@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tamagothi/view/widgets/tamagothi_gallery.dart';
 import 'package:tamagothi/presenter/presenter.dart';
@@ -35,7 +34,7 @@ class _ShopPageState extends State<ShopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/page/shope_page.png'),
             fit: BoxFit.fill,
@@ -46,7 +45,6 @@ class _ShopPageState extends State<ShopPage> {
             images: presenter.model.images,
             prices: presenter.model.prices,
             onSkinDoubleTapped: presenter.onSkinDoubleTapped,
-            purchasedSkins: presenter.purchasedSkins,
           ),
         ),
       ),

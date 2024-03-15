@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -28,7 +27,7 @@ class MyButtonStyle extends StatelessWidget{
       top: screenSize.height*topSize,//0.55
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.transparent,
+          backgroundColor: Colors.transparent,
           padding: EdgeInsets.zero,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(radius),
@@ -52,7 +51,7 @@ class MyButtonStyle extends StatelessWidget{
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   text!,
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: const TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
             ) : null,
