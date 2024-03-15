@@ -27,7 +27,7 @@ class MyTextField extends StatelessWidget {
     return Positioned(
       left: screenSize.width * left,
       top: screenSize.height * top,
-      child: Container(
+      child: SizedBox(
         width: screenSize.width * width,
         height: screenSize.height * height,
         child: TextField(
@@ -37,7 +37,7 @@ class MyTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(30.0),
             ),
             hintText: hintText,
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
             prefixIcon: icon != null ? Icon(icon, size: iconSize) : null,
             fillColor: Colors.white,
             filled: true,
@@ -52,7 +52,7 @@ class MyText extends StatelessWidget{
   final double top,left,size;
   final String text;
 
-  const MyText({Key? key,
+  const MyText({super.key,
     required this.left,
     required this.top,
     required this.size,
@@ -64,7 +64,7 @@ class MyText extends StatelessWidget{
     return Positioned(
         left: screenSize.width*left,
         top: screenSize.height*top,
-      child: Container(
+      child: SizedBox(
         width: screenSize.width * 0.5, // Пример задания ширины
         height: screenSize.height * 0.1, // Пример задания высоты
         child: Center(

@@ -7,13 +7,15 @@ class TamagothiGallery extends StatelessWidget {
     'assets/pers/pers_2.png'
   ];
 
+  TamagothiGallery({super.key});
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Positioned(
       top: screenSize.width*0.5,
       left: screenSize.height*0.05,
-      child:Container(
+      child:SizedBox(
       width: screenSize.width*0.8,
       height: screenSize.height*0.5,
       child: PageView.builder(

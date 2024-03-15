@@ -23,14 +23,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => Registration(),
-        '/login': (context) => Authorization(),
+        '/': (context) => const Registration(),
+        '/login': (context) => const Authorization(),
         '/home': (context) => Scaffold(
         body: PageView(
           children: [
-            HomePage(),
-            ShopPage(),
-            MinigamesPage(),
+            const HomePage(),
+            const ShopPage(),
+            const MinigamesPage(),
             FoodPage(model: model,)
           ],
         ),
