@@ -15,7 +15,7 @@ class Bird extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment(0, (2 * birdY + birdHeight) / (2 - birdHeight)),
-      width: MediaQuery.of(context).size.width * birdWidth / 2,
+      width: MediaQuery.of(context).size.width * birdWidth,
       height: MediaQuery.of(context).size.height * 3 / 4 * birdHeight / 2,
       child: Image.asset("assets/images/minigames/bird.png"),
     );

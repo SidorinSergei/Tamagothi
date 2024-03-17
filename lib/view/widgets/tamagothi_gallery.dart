@@ -7,7 +7,7 @@ class TamagothiGallery extends StatefulWidget {
   final Set<int> purchasedSkins;
   final List<int> prices;
 
-  TamagothiGallery({
+  TamagothiGallery({super.key,
     required this.images,
     required this.onSkinDoubleTapped,
     required this.purchasedSkins,
@@ -39,8 +39,6 @@ class _TamagothiGalleryState extends State<TamagothiGallery> {
     _currentPage.dispose();
     super.dispose();
   }
-
-  TamagothiGallery({super.key});
 
   @override
   Widget build(BuildContext context) {
