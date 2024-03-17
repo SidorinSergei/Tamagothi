@@ -7,7 +7,8 @@ import 'package:tamagothi/view/page/page_reg.dart';
 import 'package:tamagothi/view/page/shop_page.dart';
 import 'package:tamagothi/view/page/page_authoriz.dart';
 import 'package:tamagothi/view/page/page_character_creation.dart';
-FoodPageModel model = FoodPageModel(petSkin: 'assets/pers/pers_1.png',foodValue: 20);
+import 'package:tamagothi/model/model_skin.dart';
+final foodPageModel = FoodPageModel(foodValue: 50.0);
 void main() {
 
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
             children: [
               HomePage(),
               ShopPage(),
-              FoodPage(model: model,),
+              FoodPage(model: foodPageModel)
             ],
           ),
         ),
