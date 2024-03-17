@@ -40,11 +40,10 @@ class _TamagothiGalleryState extends State<TamagothiGallery> {
     super.dispose();
   }
 
-  TamagothiGallery({super.key});
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+
     // Обратите внимание на изменения здесь для корректного позиционирования
     return Column(
       children: [

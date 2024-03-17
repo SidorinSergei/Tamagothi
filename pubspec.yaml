@@ -75,6 +75,7 @@ flutter:
     - assets/images/food_4.png
     - assets/images/food_5.png
     - assets/images/minigames/
+    - assets/images/page/create_page.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

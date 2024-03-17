@@ -6,6 +6,7 @@ import 'package:tamagothi/view/page/page_minigames.dart';
 import 'package:tamagothi/view/page/page_reg.dart';
 import 'package:tamagothi/view/page/shop_page.dart';
 import 'package:tamagothi/view/page/page_authoriz.dart';
+import 'package:tamagothi/view/page/page_character_creation.dart';
 FoodPageModel model = FoodPageModel(petSkin: 'assets/pers/pers_1.png',foodValue: 20);
 void main() {
 
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => Registration(),
         '/login': (context) => Authorization(),
+        '/creation': (context) => CharacterCreationPage(),
         '/home': (context) => Scaffold(
           body: PageView(
             children: [
