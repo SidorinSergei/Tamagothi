@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
 
@@ -18,7 +17,7 @@ class FoodPageModel {
 class FoodPage extends StatefulWidget {
   final FoodPageModel model;
 
-  FoodPage({required this.model});
+  const FoodPage({super.key, required this.model});
 
   @override
   _FoodPageState createState() => _FoodPageState();
@@ -31,7 +30,7 @@ class _FoodPageState extends State<FoodPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/page/food_page.png'),
             fit: BoxFit.fill,
@@ -124,14 +123,14 @@ class FoodItem extends StatelessWidget {
   final String imagePath;
   final VoidCallback onFoodTap;
 
-  FoodItem({required this.imagePath, required this.onFoodTap});
+  const FoodItem({super.key, required this.imagePath, required this.onFoodTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onFoodTap,
       child: Padding(
-        padding: EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(2.0),
         child: Image.asset(
           imagePath,
           width: 100,
