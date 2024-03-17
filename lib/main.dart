@@ -23,19 +23,18 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const Registration(),
-        '/login': (context) => const Authorization(),
+        '/': (context) => Registration(),
+        '/login': (context) => Authorization(),
         '/home': (context) => Scaffold(
-        body: PageView(
-          children: [
-            const HomePage(),
-            const ShopPage(),
-            const MinigamesPage(),
-            FoodPage(model: model,)
-          ],
+          body: PageView(
+            children: [
+              HomePage(),
+              ShopPage(),
+              FoodPage(model: model,),
+            ],
+          ),
         ),
-      ),
-        '/flappy_bird': (context) => const FlappyBirdMain(),
+
       },
     );
   }
