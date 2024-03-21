@@ -9,9 +9,23 @@ class MinigamesPage extends StatefulWidget {
 }
 
 class _MinigamesPageState extends State<MinigamesPage> {
-  final List<String> items = ["Flappy Bird"];
-  final List<String> navigationRoutes = ["/flappy_bird"];
-  final List<String> images = ["assets/images/minigames/flappy_bird_tn.png"];
+  final List<String> items = [
+    "Flappy Bird",
+    "Fruit Gambling",
+    "Snake"
+  ];
+
+  final List<String> navigationRoutes = [
+    "/flappy_bird",
+    "/fruit_gambling",
+    "/snake"
+  ];
+
+  final List<String> images = [
+    "assets/images/minigames/flappy_bird_tn.png",
+    "assets/images/minigames/background/background_spin.png",
+    "assets/images/minigames/snake.png",
+  ];
 
   @override
   Widget build(BuildContext context) {
