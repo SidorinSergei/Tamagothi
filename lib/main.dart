@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tamagothi/minigames/flappy_bird/flappy_bird_main.dart';
+import 'package:tamagothi/minigames/fruit_gambling/fruit_gambling_main.dart';
 import 'package:tamagothi/view/page/main_page.dart';
 import 'package:tamagothi/view/page/page_food.dart';
 import 'package:tamagothi/view/page/page_minigames.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
         '/flappy_bird': (context) => const FlappyBirdMain(),
+        '/fruit_gambling': (context) => FruitGamblingApp(),
       },
     );
   }
