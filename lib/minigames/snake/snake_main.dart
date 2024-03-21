@@ -246,7 +246,7 @@ class _SnakeState extends State<Snake> {
                   ),
                 ),
                 Text(
-                  "s c o r e :  ${snakePosition.length - 5}",
+                  "s c o r e :  ${snakePosition.isEmpty ? 0 : snakePosition.length - 5}",
                   style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ],

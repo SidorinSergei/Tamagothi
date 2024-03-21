@@ -51,7 +51,7 @@ class _FruitGamblingState extends State<FruitGambling> {
 
   String resultText = '';
   double betAmount = 10.0;
-  double balance = 100.0;
+  double balance = 10000.0;
 
   _FruitGamblingState() {
     symbols = List.generate(numRows, (_) => List.generate(numColumns, (index) => availableSymbols[index % availableSymbols.length]));
@@ -172,7 +172,7 @@ class _FruitGamblingState extends State<FruitGambling> {
                 ),
                 child: Text(
                   'Баланс: $balance',
-                  style: TextStyle(fontSize: screenWidth * 0.05, color: Colors.white),
+                  style: TextStyle(fontSize: screenWidth * 0.04, color: Colors.white),
                 ),
               ),
               SizedBox(width: screenWidth * 0.1),
@@ -184,7 +184,7 @@ class _FruitGamblingState extends State<FruitGambling> {
                 ),
                 child: Text(
                   'Ставка: $betAmount',
-                  style: TextStyle(fontSize: screenWidth * 0.05, color: Colors.white),
+                  style: TextStyle(fontSize: screenWidth * 0.04, color: Colors.white),
                 ),
               ),
             ],
