@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
             const HomePage(),
             ShopPage(),
             const MinigamesPage(),
-            FoodPage(model: model,)
+            FoodPage(model: foodPageModel,)
           ],
         ),
       ),

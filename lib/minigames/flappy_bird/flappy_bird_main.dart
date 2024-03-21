@@ -22,6 +22,7 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
   double birdXaxis = 0;
   static double birdYaxis = 0;
 
+  List<Timer?> _timers = [];
   double time = 0;
   double height = 0;
   double initialHeight = birdYaxis;
@@ -43,7 +44,8 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
 
   void startGame() {
     gameHasStarted = true;
-    Timer.periodic(Duration(milliseconds: millsnds), (timer) {
+
+    Timer? timer = Timer.periodic(Duration(milliseconds: millsnds), (t) {
       time += 0.05;
       height = -5 * time * time + 2.5 * time;
       setState(() {
@@ -51,24 +53,32 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
       });
 
       if (birdIsDead()) {
-        timer.cancel();
+        t.cancel();
         gameHasStarted = false;
         _showDialog();
       }
 
-      if (barrierX[0] < -1.4) {
-        createPairOfBarriers();
+      if (barrierX[0] == 0) {
+        barrierHeight.add(createPairOfBarriers());
+        barrierX.add(barrierX.last);
       }
-      barrierX[0] -= 0.05;
-      barrierX[0] = roundDouble(barrierX[0], 2, 100);
-      barrierX[1] -= 0.05;
-      barrierX[1] = roundDouble(barrierX[1], 2, 100);
+
+      if (barrierX[0] == -1.4) {
+        print(barrierX);
+        barrierHeight.removeAt(0);
+        barrierX.removeAt(0);
+        print(barrierX);
+      }
+
+      barrierX[0] = roundDouble(barrierX[0] - 0.05, 2, 100);
+      barrierX[1] = roundDouble(barrierX[1] - 0.05, 2, 100);
 
       if (roundDouble(barrierX[0], 2, 100) == birdXaxis - 0.05 ||
           roundDouble(barrierX[1], 2, 100) == birdXaxis - 0.05) {
         score += 1;
       }
     });
+    _timers.add(timer);
   }
 
   double roundDouble(double num, int decimals, int factor) {
@@ -93,6 +103,7 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
 
   void resetGame() {
     Navigator.pop(context);
+    _timers.clear();
     setState(() {
       score = 0;
       birdYaxis = 0;
@@ -142,6 +153,15 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
   }
 
   @override
+  void dispose() {
+    gameHasStarted = false;
+    for (var timer in _timers) {
+      timer?.cancel();
+    }
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: gameHasStarted ? jump : startGame,
@@ -174,7 +194,7 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
                   showBarrier(barrierX[0], true, barrierHeight[0][0], barrierWidth),
                   showBarrier(barrierX[0], false, barrierHeight[0][1], barrierWidth),
                   showBarrier(barrierX[1], true, barrierHeight[1][0], barrierWidth),
-                  showBarrier(barrierX[1], false, barrierHeight[0][1], barrierWidth),
+                  showBarrier(barrierX[1], false, barrierHeight[1][1], barrierWidth),
                 ],
               ),
             ),
@@ -217,12 +237,12 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
       child: Barrier(
           barrierX: barrier,
           isBottomBarrier: isBottom,
-          barrierHeight: height,
+          barrierHeight: height < 0 ? 0 : height,
           barrierWidth: width),
     );
   }
 
-  void createPairOfBarriers() {
+  List<double> createPairOfBarriers() {
     double rndOffset = roundDouble(Random().nextDouble() - 0.4, 2, 100);
     bool rndDirection = Random().nextBool(); //true - up, false - down
     bool correctedDirection = rndDirection;
@@ -233,13 +253,8 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
     }
     double newHone = correctedDirection ? barrierHeight.last[0] + rndOffset : barrierHeight.last[0] - rndOffset;
     double newHtwo = correctedDirection ? barrierHeight.last[1] - rndOffset : barrierHeight.last[1] + rndOffset;
-    List<double> newHeights = [newHone, newHtwo];
 
-    barrierHeight.removeAt(0);
-    barrierX.removeAt(0);
-
-    barrierHeight.add(newHeights);
-    barrierX.add(barrierX.last + 2);
+    return [newHone, newHtwo];
   }
 
 }

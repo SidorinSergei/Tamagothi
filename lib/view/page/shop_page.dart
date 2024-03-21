@@ -45,7 +45,6 @@ class _ShopPageState extends State<ShopPage> {
           child: TamagothiGallery(
             images: presenter.model.images,
             prices: presenter.model.prices,
-            purchasedSkins: const <int>{},
             onSkinDoubleTapped: presenter.onSkinDoubleTapped,
             purchasedSkins: presenter.purchasedSkins,
           ),
