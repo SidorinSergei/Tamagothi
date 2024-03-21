@@ -101,6 +101,10 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
       initialHeight = birdYaxis;
       barrierX[0] = 2;
       barrierX[1] = barrierX[0] + 2;
+      barrierHeight = [
+        [1, 0.5],
+        [0.65, 0.9]
+      ];
     });
   }
 
@@ -111,10 +115,10 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Colors.brown,
-            title: const Center(
+            title: Center(
               child: Text(
-                "G A M E  O V E R",
-                style: TextStyle(color: Colors.white),
+                "S C O R E: $score",
+                style: const TextStyle(color: Colors.white),
               ),
             ),
             actions: [
@@ -220,9 +224,13 @@ class _FlappyBirdMainState extends State<FlappyBirdMain> {
 
   void createPairOfBarriers() {
     double rndOffset = roundDouble(Random().nextDouble() - 0.4, 2, 100);
-    bool rndDirection = Random().nextBool();
-    bool correctedDirection =
-        barrierHeight.last[1] - rndOffset < 0 ? !rndDirection : rndDirection;
+    bool rndDirection = Random().nextBool(); //true - up, false - down
+    bool correctedDirection = rndDirection;
+    if (barrierHeight.last[0] - rndOffset <= 0 && !rndDirection) {
+      correctedDirection = true;
+    } else if (barrierHeight.last[1] - rndOffset <= 0 && rndDirection) {
+      correctedDirection = false;
+    }
     double newHone = correctedDirection ? barrierHeight.last[0] + rndOffset : barrierHeight.last[0] - rndOffset;
     double newHtwo = correctedDirection ? barrierHeight.last[1] - rndOffset : barrierHeight.last[1] + rndOffset;
     List<double> newHeights = [newHone, newHtwo];
