@@ -18,7 +18,7 @@ class _SnakeState extends State<Snake> {
   int score = 0;
   bool gameHasStarted = false;
 
-
+  final List<Timer?> _timers = [];
   static var randomNumber = Random();
   int food = randomNumber.nextInt(390);
 
@@ -38,19 +38,23 @@ class _SnakeState extends State<Snake> {
   void startGame() {
     snakePosition = placeSnake();
     const duration = Duration(milliseconds: 250);
-    Timer.periodic(duration, (timer) {
+    Timer? timer = Timer.periodic(duration, (timer) {
       updateSnake();
       if (gameOver()) {
         timer.cancel();
         _showGameOverScreen();
       }
     });
+    _timers.add(timer);
+    direction = "down";
     gameHasStarted = true;
   }
 
   void exit() {
-
-    Navigator.of(context).pop();
+    gameHasStarted = false;
+    snakePosition = [];
+    _timers.clear();
+    Navigator.pushNamed(context, '/page_minigames');
   }
 
   var direction = "down";
@@ -107,6 +111,8 @@ class _SnakeState extends State<Snake> {
         }
         if (count == 2) {
           gameHasStarted = false;
+          snakePosition = [];
+          _timers.clear();
           return true;
         }
       }
@@ -119,7 +125,7 @@ class _SnakeState extends State<Snake> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text("G A M E  O V E R"),
-            content: Text("S C O R E :  ${snakePosition.length - 5}"),
+            content: Text("S C O R E :  ${snakePosition.isEmpty ? 0 : snakePosition.length - 5}"),
             actions: [
               ElevatedButton(
                 child: const Text("P L A Y  A G A I N"),
@@ -131,7 +137,6 @@ class _SnakeState extends State<Snake> {
               ElevatedButton(
                 child: const Text("G O  T O  M E N U"),
                 onPressed: () {
-                  startGame();
                   Navigator.pushNamed(context, '/page_minigames');
                 },
               )
@@ -142,7 +147,14 @@ class _SnakeState extends State<Snake> {
   }
 
 
-
+  @override
+  void dispose() {
+    gameHasStarted = false;
+    for (var timer in _timers) {
+      timer?.cancel();
+    }
+    super.dispose();
+  }
 
 
   @override
@@ -155,18 +167,22 @@ class _SnakeState extends State<Snake> {
           Expanded(
               child: GestureDetector(
                 onVerticalDragUpdate: (details) {
-                  if (direction != "up" && details.delta.dy > 0) {
-                    direction = "down";
-                  } else if (direction != "down" && details.delta.dy < 0) {
-                    direction = "up";
+                  if (gameHasStarted) {
+                    if (direction != "up" && details.delta.dy > 0) {
+                      direction = "down";
+                    } else if (direction != "down" && details.delta.dy < 0) {
+                      direction = "up";
+                    }
                   }
                 },
 
                 onHorizontalDragUpdate: (details) {
-                  if (direction != "left" && details.delta.dx > 0) {
-                    direction = "right";
-                  } else if (direction != "right" && details.delta.dx < 0) {
-                    direction = "left";
+                  if (gameHasStarted) {
+                    if (direction != "left" && details.delta.dx > 0) {
+                      direction = "right";
+                    } else if (direction != "right" && details.delta.dx < 0) {
+                      direction = "left";
+                    }
                   }
                 },
 
