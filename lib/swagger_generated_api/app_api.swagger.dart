@@ -35,7 +35,7 @@ abstract class AppApi extends ChopperService {
         converter: converter ?? $JsonSerializableConverter(),
         interceptors: interceptors ?? [],
         authenticator: authenticator,
-        baseUrl: baseUrl ?? Uri.parse('https://tamogochi.k-lab.su/'));
+        baseUrl: baseUrl ?? Uri.parse('http://tamogochi.k-lab.su/'));
     return _$AppApi(newClient);
   }
 
@@ -857,6 +857,38 @@ abstract class AppApi extends ChopperService {
   @Post(path: '/user_profiles/')
   Future<chopper.Response<UserDetail>> _userProfilesPost(
       {@Body() required UserDetail? data});
+
+  ///
+  ///@param data
+  Future<chopper.Response<UserEditBalance>> userProfilesEditBalancePost(
+      {required UserEditBalance? data}) {
+    generatedMapping.putIfAbsent(
+        UserEditBalance, () => UserEditBalance.fromJsonFactory);
+
+    return _userProfilesEditBalancePost(data: data);
+  }
+
+  ///
+  ///@param data
+  @Post(path: '/user_profiles/edit_balance/')
+  Future<chopper.Response<UserEditBalance>> _userProfilesEditBalancePost(
+      {@Body() required UserEditBalance? data});
+
+  ///
+  ///@param data
+  Future<chopper.Response<UserSetNick>> userProfilesSetNamePost(
+      {required UserSetNick? data}) {
+    generatedMapping.putIfAbsent(
+        UserSetNick, () => UserSetNick.fromJsonFactory);
+
+    return _userProfilesSetNamePost(data: data);
+  }
+
+  ///
+  ///@param data
+  @Post(path: '/user_profiles/set_name/')
+  Future<chopper.Response<UserSetNick>> _userProfilesSetNamePost(
+      {@Body() required UserSetNick? data});
 
   ///
   Future<chopper.Response<UserDetail>> userProfilesIdGet(
@@ -2043,7 +2075,7 @@ extension $SkinDetailExtension on SkinDetail {
 class UserDetail {
   UserDetail({
     this.id,
-    required this.name,
+    this.name,
     required this.phoneNumber,
     this.createdAt,
     this.balance,
@@ -2058,10 +2090,10 @@ class UserDetail {
   @JsonKey(name: 'id')
   final int? id;
   @JsonKey(name: 'name')
-  final String name;
+  final String? name;
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
-  @JsonKey(name: 'created_at', toJson: _dateToJson)
+  @JsonKey(name: 'created_at')
   final DateTime? createdAt;
   @JsonKey(name: 'balance')
   final int? balance;
@@ -2115,7 +2147,7 @@ extension $UserDetailExtension on UserDetail {
 
   UserDetail copyWithWrapped(
       {Wrapped<int?>? id,
-      Wrapped<String>? name,
+      Wrapped<String?>? name,
       Wrapped<String>? phoneNumber,
       Wrapped<DateTime?>? createdAt,
       Wrapped<int?>? balance}) {
@@ -2126,6 +2158,108 @@ extension $UserDetailExtension on UserDetail {
             (phoneNumber != null ? phoneNumber.value : this.phoneNumber),
         createdAt: (createdAt != null ? createdAt.value : this.createdAt),
         balance: (balance != null ? balance.value : this.balance));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserEditBalance {
+  UserEditBalance({
+    required this.id,
+    this.balance,
+  });
+
+  factory UserEditBalance.fromJson(Map<String, dynamic> json) =>
+      _$UserEditBalanceFromJson(json);
+
+  static const toJsonFactory = _$UserEditBalanceToJson;
+  Map<String, dynamic> toJson() => _$UserEditBalanceToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'balance')
+  final int? balance;
+  static const fromJsonFactory = _$UserEditBalanceFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UserEditBalance &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.balance, balance) ||
+                const DeepCollectionEquality().equals(other.balance, balance)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(balance) ^
+      runtimeType.hashCode;
+}
+
+extension $UserEditBalanceExtension on UserEditBalance {
+  UserEditBalance copyWith({int? id, int? balance}) {
+    return UserEditBalance(id: id ?? this.id, balance: balance ?? this.balance);
+  }
+
+  UserEditBalance copyWithWrapped({Wrapped<int>? id, Wrapped<int?>? balance}) {
+    return UserEditBalance(
+        id: (id != null ? id.value : this.id),
+        balance: (balance != null ? balance.value : this.balance));
+  }
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserSetNick {
+  UserSetNick({
+    required this.id,
+    this.name,
+  });
+
+  factory UserSetNick.fromJson(Map<String, dynamic> json) =>
+      _$UserSetNickFromJson(json);
+
+  static const toJsonFactory = _$UserSetNickToJson;
+  Map<String, dynamic> toJson() => _$UserSetNickToJson(this);
+
+  @JsonKey(name: 'id')
+  final int id;
+  @JsonKey(name: 'name')
+  final String? name;
+  static const fromJsonFactory = _$UserSetNickFromJson;
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is UserSetNick &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  String toString() => jsonEncode(this);
+
+  @override
+  int get hashCode =>
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(name) ^
+      runtimeType.hashCode;
+}
+
+extension $UserSetNickExtension on UserSetNick {
+  UserSetNick copyWith({int? id, String? name}) {
+    return UserSetNick(id: id ?? this.id, name: name ?? this.name);
+  }
+
+  UserSetNick copyWithWrapped({Wrapped<int>? id, Wrapped<String?>? name}) {
+    return UserSetNick(
+        id: (id != null ? id.value : this.id),
+        name: (name != null ? name.value : this.name));
   }
 }
 

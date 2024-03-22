@@ -21,21 +21,21 @@ class _FoodPageState extends State<FoodPage> {
   NetworkService ns = NetworkService();
 
   List<FoodDetail>? foodDetails;
-
+  List<UserStorageFoodDetail>? userStorageFood;
 
 
   Future<List<FoodDetail>> _getFoodDetails() async {
     return await ns.fetchFoodData();
   }
 
+  Future<List<UserStorageFoodDetail>> _getUserStorageFood() async {
+    return await ns.fetchUserStorageFoodData();
+  }
+
 
   @override
   void initState() {
     super.initState();
-    ns.api.foodIdDelete(id: "2");
-    ns.api.foodIdDelete(id: "3");
-    ns.api.foodIdDelete(id: "4");
-    ns.api.foodIdDelete(id: "5");
     _getFoodDetails().then((fetchedDetails) {
       setState(() {
         foodDetails = fetchedDetails;
