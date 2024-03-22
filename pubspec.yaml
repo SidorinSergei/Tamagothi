@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.6
+  chopper: ^6.1.1
+  json_annotation: ^4.8.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -40,6 +42,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner: ^2.3.3
+  chopper_generator: ^6.0.0
+  json_serializable: ^6.6.1
+  swagger_dart_code_generator: ^2.10.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -55,28 +62,12 @@ dev_dependencies:
 flutter:
 
   assets:
-    - assets/images/page/background_home_page.jpg
-    - assets/images/button_food.png
-    - assets/images/button_hz.png
-    - assets/images/button_shop.png
-    - assets/images/page/shope_page.png
-    - assets/images/page/page_reg.png
-    - assets/images/button_arrow.png
-    - assets/images/button_back.png
-    - assets/pers/pers_1.png
-    - assets/pers/pers_2.png
-    - assets/images/button_reg.png
-    - assets/images/food.png
-    - assets/images/washing.png
-    - assets/images/sleep.png
-    - assets/images/page/food_page.png
-    - assets/images/food_1.png
-    - assets/images/food_2.png
-    - assets/images/food_3.png
-    - assets/images/food_4.png
-    - assets/images/food_5.png
+    - assets/images/page/
+    - assets/pers/
+    - assets/images/
     - assets/images/minigames/
-    - assets/images/page/create_page.png
+    - assets/images/minigames/symbols/
+    - assets/images/minigames/background/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

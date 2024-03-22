@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tamagothi/minigames/flappy_bird/flappy_bird_main.dart';
+import 'package:tamagothi/minigames/fruit_gambling/fruit_gambling_main.dart';
+import 'package:tamagothi/minigames/snake/snake_main.dart';
 import 'package:tamagothi/view/page/main_page.dart';
 import 'package:tamagothi/view/page/page_food.dart';
 import 'package:tamagothi/view/page/page_minigames.dart';
@@ -29,15 +31,19 @@ class MyApp extends StatelessWidget {
         '/login': (context) => Authorization(),
         '/creation': (context) => CharacterCreationPage(),
         '/home': (context) => Scaffold(
-          body: PageView(
-            children: [
-              HomePage(),
-              ShopPage(),
-              FoodPage(model: foodPageModel)
-            ],
-          ),
+        body: PageView(
+          children: [
+            FoodPage(model: foodPageModel,),
+            const HomePage(),
+            ShopPage(),
+            const MinigamesPage(),
+          ],
         ),
-
+      ),
+        '/page_minigames': (context) => const MinigamesPage(),
+        '/flappy_bird': (context) => const FlappyBirdMain(),
+        '/fruit_gambling': (context) => FruitGamblingApp(),
+        '/snake': (context) => const Snake(),
       },
     );
   }

@@ -7,7 +7,7 @@ class TamagothiGallery extends StatefulWidget {
   final Set<int> purchasedSkins;
   final List<int> prices;
 
-  TamagothiGallery({
+  TamagothiGallery({super.key,
     required this.images,
     required this.onSkinDoubleTapped,
     required this.purchasedSkins,
