@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:tamagothi/model/model_skin.dart';
 import 'package:tamagothi/presenter/presenter.dart';
+import 'package:tamagothi/swagger_generated_api/app_api.swagger.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
+import 'package:tamagothi/network_service.dart';
 
 class FoodPage extends StatefulWidget {
   final FoodPageModel model;
@@ -14,21 +18,40 @@ class FoodPage extends StatefulWidget {
 
 class _FoodPageState extends State<FoodPage> {
   late FoodPageController _controller;
+  NetworkService ns = NetworkService();
+
+  List<FoodDetail>? foodDetails;
+
+
+
+  Future<List<FoodDetail>> _getFoodDetails() async {
+    return await ns.fetchFoodData();
+  }
+
 
   @override
   void initState() {
     super.initState();
+    ns.api.foodIdDelete(id: "2");
+    ns.api.foodIdDelete(id: "3");
+    ns.api.foodIdDelete(id: "4");
+    ns.api.foodIdDelete(id: "5");
+    _getFoodDetails().then((fetchedDetails) {
+      setState(() {
+        foodDetails = fetchedDetails;
+        _controller.list = foodDetails!.map((foodDetail) => FoodItemModel(
+          imagePath: 'assets/images/food_${foodDetail.id}.png',
+          quantity: 3,
+          count: foodDetail.saturation.toDouble(),
+        )).toList();
+      });
+    });
     _controller = FoodPageController(
       model: widget.model,
-      list: [
-        FoodItemModel(imagePath: 'assets/images/food_1.png', quantity: 5, count: 3),
-        FoodItemModel(imagePath: 'assets/images/food_2.png', quantity: 3, count: 6),
-        FoodItemModel(imagePath: 'assets/images/food_3.png', quantity: 3, count: 9),
-        FoodItemModel(imagePath: 'assets/images/food_4.png', quantity: 3, count: 12),
-        FoodItemModel(imagePath: 'assets/images/food_5.png', quantity: 3, count: 15),
-      ],
+      list: [],
     );
   }
+
 
   void onFoodItemTapped(FoodItemModel foodItem) {
     setState(() {
@@ -44,7 +67,7 @@ class _FoodPageState extends State<FoodPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/page/food_page.png'),
             fit: BoxFit.fill,
@@ -78,7 +101,7 @@ class _FoodPageState extends State<FoodPage> {
                 top: screenSize.height * 0.82,
                 width: screenSize.width * 0.8,
                 height: screenSize.height * 0.13,
-                child:ListView.builder(
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: _controller.list.length,
                   itemBuilder: (context, index) {

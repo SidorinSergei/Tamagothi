@@ -31,14 +31,23 @@ class _MinigamesPageState extends State<MinigamesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: GridView.count(
-        crossAxisCount: 2,
-        children: List.generate(items.length, (index) {
-          return MinigameThumbnail(
-            title: items[index],
-            navigationRoute: navigationRoutes[index],
-            image: images[index]);}),
-      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/page/minigame_page.png'),
+            fit: BoxFit.fill,
+          ),
+        ),
+        child: GridView.count(
+          crossAxisCount: 2,
+          children: List.generate(items.length, (index) {
+            return MinigameThumbnail(
+                title: items[index],
+                navigationRoute: navigationRoutes[index],
+                image: images[index]);}
+          ),
+        ),
+      )
     );
   }
 }

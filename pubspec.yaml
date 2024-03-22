@@ -62,28 +62,10 @@ dev_dependencies:
 flutter:
 
   assets:
-    - assets/images/page/background_home_page.jpg
-    - assets/images/button_food.png
-    - assets/images/button_hz.png
-    - assets/images/button_shop.png
-    - assets/images/page/shope_page.png
-    - assets/images/page/page_reg.png
-    - assets/images/button_arrow.png
-    - assets/images/button_back.png
-    - assets/pers/pers_1.png
-    - assets/pers/pers_2.png
-    - assets/images/button_reg.png
-    - assets/images/food.png
-    - assets/images/washing.png
-    - assets/images/sleep.png
-    - assets/images/page/food_page.png
-    - assets/images/food_1.png
-    - assets/images/food_2.png
-    - assets/images/food_3.png
-    - assets/images/food_4.png
-    - assets/images/food_5.png
+    - assets/images/page/
+    - assets/pers/
+    - assets/images/
     - assets/images/minigames/
-    - assets/images/page/create_page.png
     - assets/images/minigames/symbols/
     - assets/images/minigames/background/
   # The following line ensures that the Material Icons font is
