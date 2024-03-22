@@ -4,7 +4,7 @@
     "title": "Tamagotchi test API",
     "version": "v1"
   },
-  "host": "127.0.0.1:8000",
+  "host": "tamogochi.k-lab.su",
   "schemes": [
     "http"
   ],
@@ -1328,6 +1328,62 @@
       },
       "parameters": []
     },
+    "/user_profiles/edit_balance/": {
+      "post": {
+        "operationId": "user_profiles_edit_balance_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserEditBalance"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserEditBalance"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "parameters": []
+    },
+    "/user_profiles/set_name/": {
+      "post": {
+        "operationId": "user_profiles_set_name_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserSetNick"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserSetNick"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "parameters": []
+    },
     "/user_profiles/{id}/": {
       "get": {
         "operationId": "user_profiles_read",
@@ -2051,7 +2107,6 @@
     },
     "UserDetail": {
       "required": [
-        "name",
         "phone_number"
       ],
       "type": "object",
@@ -2076,8 +2131,8 @@
         "created_at": {
           "title": "Created at",
           "type": "string",
-          "format": "date",
-          "x-nullable": true
+          "format": "date-time",
+          "readOnly": true
         },
         "balance": {
           "title": "Balance",
@@ -2085,6 +2140,43 @@
           "maximum": 2147483647,
           "minimum": -2147483648,
           "x-nullable": true
+        }
+      }
+    },
+    "UserEditBalance": {
+      "required": [
+        "id"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "balance": {
+          "title": "Balance",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        }
+      }
+    },
+    "UserSetNick": {
+      "required": [
+        "id"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1
         }
       }
     },

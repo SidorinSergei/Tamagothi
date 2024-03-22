@@ -752,6 +752,34 @@ class _$AppApi extends AppApi {
   }
 
   @override
+  Future<Response<UserEditBalance>> _userProfilesEditBalancePost(
+      {required UserEditBalance? data}) {
+    final Uri $url = Uri.parse('/user_profiles/edit_balance/');
+    final $body = data;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserEditBalance, UserEditBalance>($request);
+  }
+
+  @override
+  Future<Response<UserSetNick>> _userProfilesSetNamePost(
+      {required UserSetNick? data}) {
+    final Uri $url = Uri.parse('/user_profiles/set_name/');
+    final $body = data;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+    );
+    return client.send<UserSetNick, UserSetNick>($request);
+  }
+
+  @override
   Future<Response<UserDetail>> _userProfilesIdGet({required String? id}) {
     final Uri $url = Uri.parse('/user_profiles/${id}/');
     final Request $request = Request(

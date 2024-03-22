@@ -204,7 +204,7 @@ Map<String, dynamic> _$SkinDetailToJson(SkinDetail instance) =>
 
 UserDetail _$UserDetailFromJson(Map<String, dynamic> json) => UserDetail(
       id: json['id'] as int?,
-      name: json['name'] as String,
+      name: json['name'] as String?,
       phoneNumber: json['phone_number'] as String,
       createdAt: json['created_at'] == null
           ? null
@@ -217,8 +217,31 @@ Map<String, dynamic> _$UserDetailToJson(UserDetail instance) =>
       'id': instance.id,
       'name': instance.name,
       'phone_number': instance.phoneNumber,
-      'created_at': _dateToJson(instance.createdAt),
+      'created_at': instance.createdAt?.toIso8601String(),
       'balance': instance.balance,
+    };
+
+UserEditBalance _$UserEditBalanceFromJson(Map<String, dynamic> json) =>
+    UserEditBalance(
+      id: json['id'] as int,
+      balance: json['balance'] as int?,
+    );
+
+Map<String, dynamic> _$UserEditBalanceToJson(UserEditBalance instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'balance': instance.balance,
+    };
+
+UserSetNick _$UserSetNickFromJson(Map<String, dynamic> json) => UserSetNick(
+      id: json['id'] as int,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$UserSetNickToJson(UserSetNick instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
     };
 
 UserStorageFoodDetail _$UserStorageFoodDetailFromJson(
