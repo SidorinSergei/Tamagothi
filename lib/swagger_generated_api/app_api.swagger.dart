@@ -1202,7 +1202,7 @@ extension $AdminDetailExtension on AdminDetail {
 @JsonSerializable(explicitToJson: true)
 class AuthenticationCodeSend {
   AuthenticationCodeSend({
-    required this.phoneNumber,
+    this.phoneNumber,
   });
 
   factory AuthenticationCodeSend.fromJson(Map<String, dynamic> json) =>
@@ -1212,7 +1212,7 @@ class AuthenticationCodeSend {
   Map<String, dynamic> toJson() => _$AuthenticationCodeSendToJson(this);
 
   @JsonKey(name: 'phone_number')
-  final String phoneNumber;
+  final String? phoneNumber;
   static const fromJsonFactory = _$AuthenticationCodeSendFromJson;
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tamagothi/view/widgets/text_field.dart';
+import 'package:tamagothi/network_service.dart';
 
 class CharacterCreationPage extends StatefulWidget {
   @override
@@ -11,10 +12,11 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
     'assets/pers/pers_1.png',
     'assets/pers/pers_2.png',
   ];
-  String selectedImage = '';
+  int selectedImage = 0;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
-  String gender = '';
+  bool gender = true;
+  NetworkService ns = NetworkService();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
                   return GestureDetector(
                     onTap: () {
                       setState(() {
-                        selectedImage = images[index];
+                        selectedImage = index;
                       });
                     },
                     child: Container(
@@ -58,7 +60,7 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
                           image: AssetImage(images[index]),
                           fit: BoxFit.contain,
                         ),
-                        border: selectedImage == images[index]
+                        border: selectedImage == index
                             ? Border.all(color: Colors.blue, width: 3)
                             : Border.all(color: Colors.transparent),
                       ),
@@ -75,6 +77,7 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             height: 0.08,
             hintText: 'Имя питомца',
             icon: Icons.person,
+            controller: nameController,
           ),
           Container(
             margin: EdgeInsets.only(left: width * 0.05, top: height * 0.55),
@@ -91,18 +94,18 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        gender = 'Мужской';
+                        gender = true;
                       });
                     },
                     child: Container(
-                      color: gender == 'Мужской'
+                      color: gender == true
                           ? Colors.blue.withOpacity(0.3)
                           : Colors.white,
                       child: Center(
                         child: Text(
                           'Мужской',
                           style: TextStyle(
-                            color: gender == 'Мужской'
+                            color: gender == true
                                 ? Colors.blue
                                 : Colors.black,
                           ),
@@ -115,18 +118,18 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
                   child: GestureDetector(
                     onTap: () {
                       setState(() {
-                        gender = 'Женский';
+                        gender = false;
                       });
                     },
                     child: Container(
-                      color: gender == 'Женский'
+                      color: gender == false
                           ? Colors.blue.withOpacity(0.3)
                           : Colors.white,
                       child: Center(
                         child: Text(
                           'Женский',
                           style: TextStyle(
-                            color: gender == 'Женский'
+                            color: gender == false
                                 ? Colors.blue
                                 : Colors.black,
                           ),
@@ -145,12 +148,14 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             height: 0.08,
             hintText: 'Возраст питомца',
             icon: Icons.cake,
+            controller: ageController,
           ),
           Positioned(
             top: height * 0.85,
             left: width * 0.22,
             child: ElevatedButton(
               onPressed: () {
+                ns.createPet(nameController.text, 5, int.parse(ageController.text), gender, null);
                 Navigator.pushReplacementNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(

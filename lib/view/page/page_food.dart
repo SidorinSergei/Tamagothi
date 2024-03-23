@@ -17,12 +17,15 @@ class FoodPage extends StatefulWidget {
 }
 
 class _FoodPageState extends State<FoodPage> {
-  late FoodPageController _controller;
+  late final FoodPageController _controller = FoodPageController(
+    model: widget.model,
+    list: [],
+  );
   NetworkService ns = NetworkService();
 
-  List<FoodDetail>? foodDetails;
-  List<UserStorageFoodDetail>? userStorageFood;
-
+  List<FoodDetail> foodDetails = [];
+  List<UserStorageFoodDetail> userStorageFood = [];
+  bool _isLoading = true;
 
   Future<List<FoodDetail>> _getFoodDetails() async {
     return await ns.fetchFoodData();
@@ -32,24 +35,35 @@ class _FoodPageState extends State<FoodPage> {
     return await ns.fetchUserStorageFoodData();
   }
 
+  void _initializeData() {
+    _getUserStorageFood().then((fetchedUserStorageFood) {
+      userStorageFood = fetchedUserStorageFood;
+      _getFoodDetails().then((fetchedFoodDetails) {
+        foodDetails = fetchedFoodDetails;
+        _processData();
+        setState(() {
+          _isLoading = false; // Update the loading state
+        });
+      });
+    });
+  }
 
+  void _processData() {
+    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user == 5).toList();
+
+    for (int i = 0; i < userStorageFoodData.length; i++) {
+      var item = FoodItemModel(
+        imagePath: 'assets/images/food_${foodDetails[userStorageFoodData[i].id!.toInt()].id}.png',
+        quantity: userStorageFoodData[i].count!.toInt(),
+        count: foodDetails[userStorageFoodData[i].id!.toInt()].saturation.toDouble(),
+      );
+      _controller.list.add(item);
+    }
+  }
   @override
   void initState() {
     super.initState();
-    _getFoodDetails().then((fetchedDetails) {
-      setState(() {
-        foodDetails = fetchedDetails;
-        _controller.list = foodDetails!.map((foodDetail) => FoodItemModel(
-          imagePath: 'assets/images/food_${foodDetail.id}.png',
-          quantity: 3,
-          count: foodDetail.saturation.toDouble(),
-        )).toList();
-      });
-    });
-    _controller = FoodPageController(
-      model: widget.model,
-      list: [],
-    );
+    _initializeData();
   }
 
 
@@ -101,7 +115,7 @@ class _FoodPageState extends State<FoodPage> {
                 top: screenSize.height * 0.82,
                 width: screenSize.width * 0.8,
                 height: screenSize.height * 0.13,
-                child: ListView.builder(
+                child: _isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: _controller.list.length,
                   itemBuilder: (context, index) {

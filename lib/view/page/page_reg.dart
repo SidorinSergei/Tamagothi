@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:tamagothi/view/widgets/button_style.dart';
 import 'package:tamagothi/view/widgets/text_field.dart';
+import 'package:tamagothi/network_service.dart';
 
 class Registration extends StatelessWidget{
-  const Registration({super.key});
+  Registration({super.key});
+  final TextEditingController phoneController = TextEditingController();
+  NetworkService ns = NetworkService();
 
   @override
   Widget build(BuildContext context){
-    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Container(
@@ -20,11 +22,11 @@ class Registration extends StatelessWidget{
         child: Center(
           child: Stack(
             children: <Widget>[
-              const MyTextField(left: 0.29, top: 0.42, width: 0.45, height: 0.045, hintText: 'Email',icon: Icons.person,),
-              const MyTextField(left: 0.29, top: 0.5, width: 0.45, height: 0.045, hintText: 'Password',icon: Icons.key,),
-              const MyTextField(left: 0.29, top: 0.56, width: 0.45, height: 0.045, hintText: 'Confirmation',icon: Icons.key,),
-              MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.62,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/creation');},text: 'Зарегистрироваться',),
-              MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.685,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/login');},text: 'Войти',),
+              //const MyTextField(left: 0.29, top: 0.42, width: 0.45, height: 0.045, hintText: 'Email',icon: Icons.person,),
+              MyTextField(left: 0.29, top: 0.52, width: 0.45, height: 0.045, hintText: 'Номер Телофона',icon: Icons.mobile_screen_share,controller: phoneController,),
+              //const MyTextField(left: 0.29, top: 0.56, width: 0.45, height: 0.045, hintText: 'Confirmation',icon: Icons.key,),
+              //MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.62,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/creation');},text: 'Зарегистрироваться',),
+              MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.585,radius: 30, onPressed: (){ns.sendVerificationCode(phoneController.text);Navigator.pushReplacementNamed(context, '/login');},text: 'Получить код',),
             ],
           ),
         ),

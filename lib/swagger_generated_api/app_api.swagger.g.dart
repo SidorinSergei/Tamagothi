@@ -20,10 +20,11 @@ Map<String, dynamic> _$AdminDetailToJson(AdminDetail instance) =>
     };
 
 AuthenticationCodeSend _$AuthenticationCodeSendFromJson(
-        Map<String, dynamic> json) =>
-    AuthenticationCodeSend(
-      phoneNumber: json['phone_number'] as String,
-    );
+    Map<String, dynamic> json) {
+  return AuthenticationCodeSend(
+    phoneNumber: json['message'] as String?,
+  );
+}
 
 Map<String, dynamic> _$AuthenticationCodeSendToJson(
         AuthenticationCodeSend instance) =>

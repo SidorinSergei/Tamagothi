@@ -10,6 +10,7 @@ import 'package:tamagothi/view/page/shop_page.dart';
 import 'package:tamagothi/view/page/page_authoriz.dart';
 import 'package:tamagothi/view/page/page_character_creation.dart';
 import 'package:tamagothi/model/model_skin.dart';
+import 'package:tamagothi/view/page/cleaning_page.dart';
 final foodPageModel = FoodPageModel(foodValue: 50.0);
 void main() {
 
@@ -33,6 +34,8 @@ class MyApp extends StatelessWidget {
         '/home': (context) => Scaffold(
         body: PageView(
           children: [
+            WashPage(),
+            CharacterCreationPage(),
             FoodPage(model: foodPageModel,),
             const HomePage(),
             ShopPage(),
