@@ -1247,8 +1247,8 @@ extension $AuthenticationCodeSendExtension on AuthenticationCodeSend {
 @JsonSerializable(explicitToJson: true)
 class AuthenticationCodeVerify {
   AuthenticationCodeVerify({
-    required this.phoneNumber,
-    required this.code,
+    this.phoneNumber,
+    this.code,
   });
 
   factory AuthenticationCodeVerify.fromJson(Map<String, dynamic> json) =>
@@ -1258,9 +1258,9 @@ class AuthenticationCodeVerify {
   Map<String, dynamic> toJson() => _$AuthenticationCodeVerifyToJson(this);
 
   @JsonKey(name: 'phone_number')
-  final String phoneNumber;
+  final String? phoneNumber;
   @JsonKey(name: 'code')
-  final String code;
+  final String? code;
   static const fromJsonFactory = _$AuthenticationCodeVerifyFromJson;
 
   @override

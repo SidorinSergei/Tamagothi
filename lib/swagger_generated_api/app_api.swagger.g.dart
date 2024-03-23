@@ -35,8 +35,8 @@ Map<String, dynamic> _$AuthenticationCodeSendToJson(
 AuthenticationCodeVerify _$AuthenticationCodeVerifyFromJson(
         Map<String, dynamic> json) =>
     AuthenticationCodeVerify(
-      phoneNumber: json['phone_number'] as String,
-      code: json['code'] as String,
+      phoneNumber: json['phone_number'] as String?,
+      code: json['code'] as String?,
     );
 
 Map<String, dynamic> _$AuthenticationCodeVerifyToJson(

@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => Registration(),
-        '/login': (context) => Authorization(),
+        '/login': (context) => Authorization(codeMessage: ''),
         '/creation': (context) => CharacterCreationPage(),
         '/home': (context) => Scaffold(
         body: PageView(

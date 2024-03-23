@@ -1,6 +1,6 @@
+import "dart:convert";
+
 import "swagger_generated_api/app_api.swagger.dart";
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class NetworkService {
   late final AppApi api;
@@ -11,6 +11,7 @@ class NetworkService {
 
   void _initialize() async {
     api = AppApi.create();
+
   }
 
   Future<List<UserStorageFoodDetail>> fetchUserStorageFoodData() async {
@@ -31,15 +32,22 @@ class NetworkService {
     return foods;
   }
 
-  void createPet(String name, int user,int age,bool male, int? skinId) async{
-    final PetDetail newPet = PetDetail(name: name, user: user,age: age,isMale: male,moodPoints: 100,purityPoints: 100,starvationPoints: 0,personality: skinId);
+  void createPet(String name, int user, int age, bool gender, int? skinId) async{
+    final PetDetail newPet = PetDetail(
+        name: name,
+        user: user,
+        age: age,
+        isMale: gender,
+        moodPoints: 100,
+        purityPoints: 100,
+        starvationPoints: 0,
+        personality: skinId
+    );
     try {
       final response = await api.petsPost(data: newPet);
       if (response.isSuccessful) {
-        // Успешная отправка, обработайте ответ
         print("Питомец успешно создан");
       } else {
-        // Обработайте ошибку
         print("Ошибка при создании питомца: ${response.error}");
       }
     } catch (e) {
@@ -47,29 +55,52 @@ class NetworkService {
     }
   }
 
-  void sendAuthCode(String phone) async {
-    // Создание объекта AuthenticationCodeSend
-    AuthenticationCodeSend data = AuthenticationCodeSend(phoneNumber: phone);
-    print(data.phoneNumber);
-    // Вызов функции authCodeSendPost и ожидание ответа
-    var response = await api.authCodeSendPost(data: data);
-    print(response);
+  Future<AuthenticationCodeSend?> fetchAuthCodeSendPost(String phoneNumber) async {
+    AuthenticationCodeSend? data = AuthenticationCodeSend(phoneNumber: phoneNumber);
+    final response = await api.authCodeSendPost(data: data);
+    late AuthenticationCodeSend? code;
+    if (response.isSuccessful) {
+      code = response.body;
+      print(code);
+    }
+
+    return code;
   }
 
-  Future<void> sendVerificationCode(String phoneNumber) async {
+  Future<AuthenticationCodeSend?> sendVerificationCode(String phoneNumber) async {
     final authCodeSendData = AuthenticationCodeSend(phoneNumber: phoneNumber);
 
     final response = await api.authCodeSendPost(data: authCodeSendData);
     if (response.isSuccessful && response.body != null) {
       print('Verification code sent successfully');
-      print(response.body);
+      return response.body;
     } else {
       print('Failed to send verification code with status code: ${response.statusCode}');
       if (response.error != null) {
         print('Error: ${response.error}');
       }
     }
+    return null;
   }
+
+  Future<AuthenticationCodeVerify?> test(String phoneNumber, String code) async {
+    final authCodeVerifyData = AuthenticationCodeVerify(phoneNumber: phoneNumber, code: code);
+    final response = await api.authCodeVerifyPost(data: authCodeVerifyData);
+    if (response.isSuccessful && response.body != null) {
+      print('Verification code received successfully');
+      return response.body;
+    } else {
+      print('Failed to send verification code with status code: ${response.statusCode}');
+      if (response.error != null) {
+        print('Error: ${response.error}');
+      }
+    }
+    return null;
+  }
+
+// void createUserProfile(String phoneNumber) async {
+//   UserDetail? data = UserDetail(name: "TEST", phoneNumber: phoneNumber, balance: 100);
+//   final response = await api.userProfilesPost(data: data);
+//   print(response.body);
+// }
 }
-
-
