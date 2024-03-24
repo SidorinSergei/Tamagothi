@@ -33,8 +33,7 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
   Future<void> fetchUserIdByPhoneNumber() async {
     List<UserDetail> users =
     await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
-    var user =
-    users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
+    var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
     userId = user.id.toString();
   }
 
@@ -175,14 +174,16 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             left: width * 0.22,
             child: ElevatedButton(
               onPressed: () async {
-                print(1);
-                await createUser();
-                print(2);
-                await fetchUserIdByPhoneNumber();
-                print(3);
-                ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
-                Navigator.pushReplacementNamed(context, '/home');
-
+                try {
+                  await createUser();
+                  await  fetchUserIdByPhoneNumber();
+                  ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
+                  Navigator.pushReplacementNamed(context, '/home');
+                } catch(e) {
+                  await  fetchUserIdByPhoneNumber();
+                  ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
+                  Navigator.pushReplacementNamed(context, '/home');
+                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,

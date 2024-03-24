@@ -37,9 +37,9 @@ class NetworkService {
         user: user,
         age: age,
         isMale: gender,
-        moodPoints: 100,
-        purityPoints: 100,
-        starvationPoints: 0,
+        moodPoints: 50,
+        purityPoints: 50,
+        starvationPoints:50,
         personality: skinId
     );
     try {

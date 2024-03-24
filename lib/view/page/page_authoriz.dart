@@ -44,11 +44,8 @@ class _AuthorizationState extends State<Authorization> {
   @override
   void initState() {
     super.initState();
-    print("CODE MESSAGE ${widget.codeMessage}");
     verCode = widget.codeMessage?.split(" ")[2];
     phoneNumber = widget.codeMessage?.split(" ")[6];
-    print("verCode $verCode");
-    print("phoneNumber $phoneNumber");
   }
 
 
@@ -96,6 +93,7 @@ class _AuthorizationState extends State<Authorization> {
                     ns.isPhoneNumberInListSync(phoneNumber!).then((result) {
                       if (result == true) {
                         fetchUserIdByPhoneNumber();
+                        fetchPetIdByUser();
                         Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         Navigator.pushReplacement(context, MaterialPageRoute(
