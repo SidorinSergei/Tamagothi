@@ -26,15 +26,34 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
   bool gender = true;
   NetworkService ns = NetworkService();
 
+  Future<void> us() async{
+    await ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
+    List<UserDetail> users = await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
+    var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
+    userId = await user.id.toString();
+    List<PetDetail> pets = await ns.fetchPetsData();
+    print('${userId}');
+  }
+
   Future<void> createUser() async {
     ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
+    print('${ns.createUserProfile(widget.phoneNumber!, widget.verCode!)}+сука');
   }
 
   Future<void> fetchUserIdByPhoneNumber() async {
     List<UserDetail> users =
     await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
+    //print(users);
+    //print('${widget.phoneNumber}+rggg');
     var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
-    userId = user.id.toString();
+    userId = await user.id.toString();
+  }
+  Future<void> fetchPetIdByUser() async {
+    List<PetDetail> pets = await ns.fetchPetsData();
+    //print('${userId}+rggg');
+    var pet = await pets.firstWhere((element) => element.user == int.parse(userId!));
+    petId = await pet.id.toString();
+    //print(petId);
   }
 
   @override
@@ -174,16 +193,11 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             left: width * 0.22,
             child: ElevatedButton(
               onPressed: () async {
-                try {
-                  await createUser();
-                  await  fetchUserIdByPhoneNumber();
-                  ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
+                await us();
+                await  ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
+                await fetchPetIdByUser();
+
                   Navigator.pushReplacementNamed(context, '/home');
-                } catch(e) {
-                  await  fetchUserIdByPhoneNumber();
-                  ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
-                  Navigator.pushReplacementNamed(context, '/home');
-                }
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,

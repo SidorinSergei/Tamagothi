@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tamagothi/presenter/global.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
 import 'package:tamagothi/network_service.dart';
 
@@ -16,13 +17,14 @@ class _WashPageState extends State<WashPage> {
   var purityPoints;
 
   void _initializeData() {
-    ns.statesPet('purityPoints','8').then((result){
+    ns.statesPet('purityPoints',petId!).then((result){
       setState(() {
-        purityPoints = result?.toDouble();
+        purityPoints = result!.toDouble();
         _isLoading = false; // Update the loading state
       });
       });
   }
+
   double cumulativeChange = 0;
 
   @override
@@ -53,9 +55,10 @@ class _WashPageState extends State<WashPage> {
               purityPoints += 0.005;
               cumulativeChange += purityPoints - previousPoints;
             }
+            print(petId);
             if (cumulativeChange >= 1) {
               int changeToInt = cumulativeChange.toInt();
-              ns.increasingStates("purity", 8, changeToInt);
+              ns.increasingStates("purity", int.parse(petId!), changeToInt);
               cumulativeChange -= changeToInt;
             }
             position = details.localPosition;

@@ -10,7 +10,6 @@ class NetworkService {
 
   void _initialize() async {
     api = AppApi.create();
-
   }
 
   Future<List<UserStorageFoodDetail>> fetchUserStorageFoodData() async {
@@ -31,7 +30,7 @@ class NetworkService {
     return foods;
   }
 
-  void createPet(String name, int user, int age, bool gender, int? skinId) async{
+  Future<void> createPet(String name, int user, int age, bool gender, int? skinId) async{
     final PetDetail newPet = PetDetail(
         name: name,
         user: user,
@@ -83,7 +82,7 @@ class NetworkService {
   }
 
   Future<AuthenticationCodeVerify?> createUserProfile(String phoneNumber, String code) async {
-    final authCodeVerifyData = AuthenticationCodeVerify(phoneNumber: phoneNumber, code: code);
+    final authCodeVerifyData = await AuthenticationCodeVerify(phoneNumber: phoneNumber, code: code);
     final response = await api.authCodeVerifyPost(data: authCodeVerifyData);
     if (response.isSuccessful && response.body != null) {
       print('Verification code received successfully');
@@ -112,16 +111,16 @@ class NetworkService {
 
   Future<int?> statesPet(String fieldName,String id) async {
     final user = await api.petsIdGet(id: id);
-      switch (fieldName) {
-        case 'moodPoints':
-          return user.body!.moodPoints;
-        case 'purityPoints':
-          return user.body!.purityPoints;
-        case 'starvationPoints':
-          return user.body!.starvationPoints;
-        default:
-          return null;
-      }
+    switch (fieldName) {
+      case 'moodPoints':
+        return user.body!.moodPoints;
+      case 'purityPoints':
+        return user.body!.purityPoints;
+      case 'starvationPoints':
+        return user.body!.starvationPoints;
+      default:
+        return null;
+    }
   }
 
   void increasingStates(String characteristic, int petId,int value) async{

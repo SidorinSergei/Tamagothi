@@ -25,9 +25,9 @@ class _AuthorizationState extends State<Authorization> {
 
   Future<void> fetchUserIdByPhoneNumber() async {
     List<UserDetail> users =
-        await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
+    await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
     var user =
-        users.firstWhere((element) => element.phoneNumber == phoneNumber);
+    users.firstWhere((element) => element.phoneNumber == phoneNumber);
     userId = user.id.toString();
   }
 
@@ -58,9 +58,9 @@ class _AuthorizationState extends State<Authorization> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-          image: AssetImage('assets/images/page/page_reg.png'),
-          fit: BoxFit.fill,
-        )),
+              image: AssetImage('assets/images/page/page_reg.png'),
+              fit: BoxFit.fill,
+            )),
         child: Center(
           child: Stack(
             children: <Widget>[
