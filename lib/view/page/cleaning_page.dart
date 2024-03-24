@@ -55,7 +55,6 @@ class _WashPageState extends State<WashPage> {
               purityPoints += 0.005;
               cumulativeChange += purityPoints - previousPoints;
             }
-            print(petId);
             if (cumulativeChange >= 1) {
               int changeToInt = cumulativeChange.toInt();
               ns.increasingStates("purity", int.parse(petId!), changeToInt);

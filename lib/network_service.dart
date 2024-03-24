@@ -161,4 +161,13 @@ class NetworkService {
 
   }
 
+  Future<List<SkinDetail>> skins() async{
+    final response = await api.skinGet();
+    late List<SkinDetail> skins=[];
+    if (response.isSuccessful) {
+      skins = response.body ?? [];
+    }
+    return skins;
+  }
+
 }
