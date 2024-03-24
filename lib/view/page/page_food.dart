@@ -1,29 +1,89 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:tamagothi/model/model_skin.dart';
+import 'package:tamagothi/presenter/global.dart';
+import 'package:tamagothi/presenter/presenter.dart';
+import 'package:tamagothi/swagger_generated_api/app_api.swagger.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
-
-// Модель
-class FoodPageModel {
-  final String petSkin;
-  double foodValue;
-
-  FoodPageModel({required this.petSkin, required this.foodValue});
-
-  void addFood(double value) {
-    foodValue += value;
-    if (foodValue > 100) foodValue = 100;
-  }
-}
+import 'package:tamagothi/network_service.dart';
 
 class FoodPage extends StatefulWidget {
   final FoodPageModel model;
 
-  const FoodPage({super.key, required this.model});
+  FoodPage({required this.model});
 
   @override
   _FoodPageState createState() => _FoodPageState();
 }
 
 class _FoodPageState extends State<FoodPage> {
+  late final FoodPageController _controller = FoodPageController(
+    model: widget.model,
+    list: [],
+  );
+  NetworkService ns = NetworkService();
+
+  List<FoodDetail> foodDetails = [];
+  List<UserStorageFoodDetail> userStorageFood = [];
+  bool _isLoading = true;
+
+
+  Future<List<FoodDetail>> _getFoodDetails() async {
+    return await ns.fetchFoodData();
+  }
+
+  Future<List<UserStorageFoodDetail>> _getUserStorageFood() async {
+    return await ns.fetchUserStorageFoodData();
+  }
+
+  void _initializeData() {
+    _getUserStorageFood().then((fetchedUserStorageFood) {
+      userStorageFood = fetchedUserStorageFood;
+      _getFoodDetails().then((fetchedFoodDetails) {
+        foodDetails = fetchedFoodDetails;
+        _processData();
+        setState(() {
+          _isLoading = false; // Update the loading state
+        });
+      });
+    });
+  }
+
+  void _processData() {
+    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user.toString() == USER_ID).toList();
+    for (var foodData in userStorageFoodData) {
+      FoodDetail? food = foodDetails.firstWhere((element) => element.id == foodData.food);
+      var item = FoodItemModel(
+        imagePath: 'assets/images/food_${food.id}.png',
+        quantity: foodData.count!.toInt(),
+        count: food.saturation.toDouble(),
+      );
+      _controller.list.add(item);
+    }
+  }
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+
+  void onFoodItemTapped(FoodItemModel foodItem) {
+    setState(() {
+      _controller.addFood(foodItem);
+      _controller.removeEmptyFoodItems();
+    });
+    List<UserStorageFoodDetail> foodDetails = userStorageFood.where((element) => element.user == int.parse(USER_ID!)).toList();
+    RegExp regExp = RegExp(r'\d+');
+    var match = regExp.firstMatch(foodItem.imagePath);
+    String? foodId = match?.group(0);
+    UserStorageFoodDetail? firstFood = foodDetails.firstWhere((element) => element.food == int.parse(foodId!));
+    firstFood.count = foodItem.quantity;
+    ns.updateUserStorageFoodData(firstFood, firstFood.id.toString());
+  }
+
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -39,18 +99,45 @@ class _FoodPageState extends State<FoodPage> {
         child: Center(
           child: Stack(
             children: <Widget>[
-              // Питомец
-              Positioned(
-                left: screenSize.width * 0.095,
-                top: screenSize.height * 0.25,
-                child: Image.asset(
-                  widget.model.petSkin,
-                  width: screenSize.width * 0.83,
-                  height: screenSize.height * 0.83,
-                ),
+              _isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _controller.list.length,
+                itemBuilder: (context, index) {
+                  final foodItem = _controller.list[index];
+                  return GestureDetector(
+                    onTap: () => onFoodItemTapped(foodItem),
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: <Widget>[
+                          Image.asset(
+                            foodItem.imagePath,
+                            width: 100,
+                            height: 100,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              foodItem.quantity.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
               ),
               HealthScale(
-                value: widget.model.foodValue,
+                value: 20,
                 size: 0.23,
                 leftSize: 0.39,
                 topSize: 0.07,
@@ -61,80 +148,59 @@ class _FoodPageState extends State<FoodPage> {
                 ),
               ),
               Positioned(
+                left: screenSize.width * 0.095,
+                top: screenSize.height * 0.25,
+                child: Image.asset(
+                  'assets/pers/pers_1.png',
+                  width: screenSize.width * 0.83,
+                  height: screenSize.height * 0.83,
+                ),
+              ),
+              Positioned(
                 left: screenSize.width * 0.1,
                 top: screenSize.height * 0.82,
                 width: screenSize.width * 0.8,
                 height: screenSize.height * 0.13,
-                child: ListView(
+                child: _isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    FoodItem(
-                      imagePath: 'assets/images/food_1.png',
-                      onFoodTap: () {
-                        setState(() {
-                          widget.model.addFood(5);
-                        });
-                      },
-                    ),
-                    FoodItem(
-                      imagePath: 'assets/images/food_2.png',
-                      onFoodTap: () {
-                        setState(() {
-                          widget.model.addFood(8);
-                        });
-                      },
-                    ),
-                    FoodItem(
-                      imagePath: 'assets/images/food_3.png',
-                      onFoodTap: () {
-                        setState(() {
-                          widget.model.addFood(10);
-                        });
-                      },
-                    ),
-                    FoodItem(
-                      imagePath: 'assets/images/food_4.png',
-                      onFoodTap: () {
-                        setState(() {
-                          widget.model.addFood(12);
-                        });
-                      },
-                    ),
-                    FoodItem(
-                      imagePath: 'assets/images/food_5.png',
-                      onFoodTap: () {
-                        setState(() {
-                          widget.model.addFood(14);
-                        });
-                      },
-                    ),
-                  ],
+                  itemCount: _controller.list.length,
+                  itemBuilder: (context, index) {
+                    final foodItem = _controller.list[index];
+                    return GestureDetector(
+                      onTap: () => onFoodItemTapped(foodItem),
+                      child: Padding(
+                        padding: EdgeInsets.all(2.0),
+                        child: Stack(
+                          alignment: Alignment.bottomRight,
+                          children: <Widget>[
+                            Image.asset(
+                              foodItem.imagePath,
+                              width: 100,
+                              height: 100,
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(3.0),
+                              decoration: BoxDecoration(
+                                color: Colors.black54,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Text(
+                                foodItem.quantity.toString(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class FoodItem extends StatelessWidget {
-  final String imagePath;
-  final VoidCallback onFoodTap;
-
-  const FoodItem({super.key, required this.imagePath, required this.onFoodTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onFoodTap,
-      child: Padding(
-        padding: const EdgeInsets.all(2.0),
-        child: Image.asset(
-          imagePath,
-          width: 100,
-          height: 550,
         ),
       ),
     );

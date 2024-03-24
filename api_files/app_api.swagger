@@ -1,0 +1,2211 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "title": "Tamagotchi test API",
+    "version": "v1"
+  },
+  "host": "tamogochi.k-lab.su",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "Basic": []
+    }
+  ],
+  "paths": {
+    "/admins/": {
+      "get": {
+        "operationId": "admins_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AdminDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "admins"
+        ]
+      },
+      "post": {
+        "operationId": "admins_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        },
+        "tags": [
+          "admins"
+        ]
+      },
+      "parameters": []
+    },
+    "/admins/{id}/": {
+      "get": {
+        "operationId": "admins_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        },
+        "tags": [
+          "admins"
+        ]
+      },
+      "put": {
+        "operationId": "admins_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        },
+        "tags": [
+          "admins"
+        ]
+      },
+      "patch": {
+        "operationId": "admins_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AdminDetail"
+            }
+          }
+        },
+        "tags": [
+          "admins"
+        ]
+      },
+      "delete": {
+        "operationId": "admins_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "admins"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/auth_code/send/": {
+      "post": {
+        "operationId": "auth_code_send_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AuthenticationCodeSend"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AuthenticationCodeSend"
+            }
+          }
+        },
+        "tags": [
+          "auth_code"
+        ]
+      },
+      "parameters": []
+    },
+    "/auth_code/verify/": {
+      "post": {
+        "operationId": "auth_code_verify_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AuthenticationCodeVerify"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/AuthenticationCodeVerify"
+            }
+          }
+        },
+        "tags": [
+          "auth_code"
+        ]
+      },
+      "parameters": []
+    },
+    "/buy/food/": {
+      "post": {
+        "operationId": "buy_food_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/BuyFood"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/BuyFood"
+            }
+          }
+        },
+        "tags": [
+          "buy"
+        ]
+      },
+      "parameters": []
+    },
+    "/buy/skin/": {
+      "post": {
+        "operationId": "buy_skin_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "buy"
+        ]
+      },
+      "parameters": []
+    },
+    "/categories/": {
+      "get": {
+        "operationId": "categories_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CategoryDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "post": {
+        "operationId": "categories_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "parameters": []
+    },
+    "/categories/{id}/": {
+      "get": {
+        "operationId": "categories_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "put": {
+        "operationId": "categories_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "patch": {
+        "operationId": "categories_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "delete": {
+        "operationId": "categories_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/categories_food/": {
+      "get": {
+        "operationId": "categories_food_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CategoryFoodDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "categories_food"
+        ]
+      },
+      "post": {
+        "operationId": "categories_food_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories_food"
+        ]
+      },
+      "parameters": []
+    },
+    "/categories_food/{category}/": {
+      "get": {
+        "operationId": "categories_food_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories_food"
+        ]
+      },
+      "put": {
+        "operationId": "categories_food_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories_food"
+        ]
+      },
+      "patch": {
+        "operationId": "categories_food_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/CategoryFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "categories_food"
+        ]
+      },
+      "delete": {
+        "operationId": "categories_food_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "categories_food"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "category",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/food/": {
+      "get": {
+        "operationId": "food_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/FoodDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "food"
+        ]
+      },
+      "post": {
+        "operationId": "food_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "food"
+        ]
+      },
+      "parameters": []
+    },
+    "/food/{id}/": {
+      "get": {
+        "operationId": "food_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "food"
+        ]
+      },
+      "put": {
+        "operationId": "food_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "food"
+        ]
+      },
+      "patch": {
+        "operationId": "food_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/FoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "food"
+        ]
+      },
+      "delete": {
+        "operationId": "food_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "food"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/games/": {
+      "get": {
+        "operationId": "games_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/GameDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "games"
+        ]
+      },
+      "post": {
+        "operationId": "games_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        },
+        "tags": [
+          "games"
+        ]
+      },
+      "parameters": []
+    },
+    "/games/{id}/": {
+      "get": {
+        "operationId": "games_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        },
+        "tags": [
+          "games"
+        ]
+      },
+      "put": {
+        "operationId": "games_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        },
+        "tags": [
+          "games"
+        ]
+      },
+      "patch": {
+        "operationId": "games_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/GameDetail"
+            }
+          }
+        },
+        "tags": [
+          "games"
+        ]
+      },
+      "delete": {
+        "operationId": "games_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "games"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/personality/": {
+      "get": {
+        "operationId": "personality_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PersonalityDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "personality"
+        ]
+      },
+      "post": {
+        "operationId": "personality_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        },
+        "tags": [
+          "personality"
+        ]
+      },
+      "parameters": []
+    },
+    "/personality/{id}/": {
+      "get": {
+        "operationId": "personality_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        },
+        "tags": [
+          "personality"
+        ]
+      },
+      "put": {
+        "operationId": "personality_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        },
+        "tags": [
+          "personality"
+        ]
+      },
+      "patch": {
+        "operationId": "personality_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PersonalityDetail"
+            }
+          }
+        },
+        "tags": [
+          "personality"
+        ]
+      },
+      "delete": {
+        "operationId": "personality_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "personality"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/pets/": {
+      "get": {
+        "operationId": "pets_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PetDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "post": {
+        "operationId": "pets_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "parameters": []
+    },
+    "/pets/increase/": {
+      "post": {
+        "operationId": "pets_increase_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetPointsIncrease"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PetPointsIncrease"
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "parameters": []
+    },
+    "/pets/{id}/": {
+      "get": {
+        "operationId": "pets_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "put": {
+        "operationId": "pets_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "patch": {
+        "operationId": "pets_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PetDetail"
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "delete": {
+        "operationId": "pets_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/pets/{id}/points/": {
+      "get": {
+        "operationId": "pets_points_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/PetPoints"
+            }
+          }
+        },
+        "tags": [
+          "pets"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "A unique integer value identifying this pet.",
+          "required": true,
+          "type": "integer"
+        }
+      ]
+    },
+    "/skin/": {
+      "get": {
+        "operationId": "skin_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/SkinDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "skin"
+        ]
+      },
+      "post": {
+        "operationId": "skin_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "skin"
+        ]
+      },
+      "parameters": []
+    },
+    "/skin/{id}/": {
+      "get": {
+        "operationId": "skin_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "skin"
+        ]
+      },
+      "put": {
+        "operationId": "skin_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "skin"
+        ]
+      },
+      "patch": {
+        "operationId": "skin_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/SkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "skin"
+        ]
+      },
+      "delete": {
+        "operationId": "skin_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "skin"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/user_profiles/": {
+      "get": {
+        "operationId": "user_profiles_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "post": {
+        "operationId": "user_profiles_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "parameters": []
+    },
+    "/user_profiles/edit_balance/": {
+      "post": {
+        "operationId": "user_profiles_edit_balance_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserEditBalance"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserEditBalance"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "parameters": []
+    },
+    "/user_profiles/set_name/": {
+      "post": {
+        "operationId": "user_profiles_set_name_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserSetNick"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserSetNick"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "parameters": []
+    },
+    "/user_profiles/{id}/": {
+      "get": {
+        "operationId": "user_profiles_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "put": {
+        "operationId": "user_profiles_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "patch": {
+        "operationId": "user_profiles_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "delete": {
+        "operationId": "user_profiles_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user_profiles"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/user_storage_food/": {
+      "get": {
+        "operationId": "user_storage_food_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserStorageFoodDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_storage_food"
+        ]
+      },
+      "post": {
+        "operationId": "user_storage_food_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_food"
+        ]
+      },
+      "parameters": []
+    },
+    "/user_storage_food/{id}/": {
+      "get": {
+        "operationId": "user_storage_food_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_food"
+        ]
+      },
+      "put": {
+        "operationId": "user_storage_food_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_food"
+        ]
+      },
+      "patch": {
+        "operationId": "user_storage_food_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageFoodDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_food"
+        ]
+      },
+      "delete": {
+        "operationId": "user_storage_food_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user_storage_food"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    },
+    "/user_storage_skin/": {
+      "get": {
+        "operationId": "user_storage_skin_list",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserStorageSkinDetail"
+              }
+            }
+          }
+        },
+        "tags": [
+          "user_storage_skin"
+        ]
+      },
+      "post": {
+        "operationId": "user_storage_skin_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_skin"
+        ]
+      },
+      "parameters": []
+    },
+    "/user_storage_skin/{id}/": {
+      "get": {
+        "operationId": "user_storage_skin_read",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_skin"
+        ]
+      },
+      "put": {
+        "operationId": "user_storage_skin_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_skin"
+        ]
+      },
+      "patch": {
+        "operationId": "user_storage_skin_partial_update",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/UserStorageSkinDetail"
+            }
+          }
+        },
+        "tags": [
+          "user_storage_skin"
+        ]
+      },
+      "delete": {
+        "operationId": "user_storage_skin_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "user_storage_skin"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "AdminDetail": {
+      "required": [
+        "login",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "login": {
+          "title": "Login",
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "password": {
+          "title": "Password",
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1
+        }
+      }
+    },
+    "AuthenticationCodeSend": {
+      "required": [
+        "phone_number"
+      ],
+      "type": "object",
+      "properties": {
+        "phone_number": {
+          "title": "Phone number",
+          "type": "string",
+          "maxLength": 15,
+          "minLength": 1
+        }
+      }
+    },
+    "AuthenticationCodeVerify": {
+      "required": [
+        "phone_number",
+        "code"
+      ],
+      "type": "object",
+      "properties": {
+        "phone_number": {
+          "title": "Phone number",
+          "type": "string",
+          "maxLength": 15,
+          "minLength": 1
+        },
+        "code": {
+          "title": "Code",
+          "type": "string",
+          "maxLength": 4,
+          "minLength": 1
+        }
+      }
+    },
+    "BuyFood": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "title": "User",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "food": {
+          "title": "Food",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "UserStorageSkinDetail": {
+      "required": [
+        "user",
+        "skin"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "user": {
+          "title": "User",
+          "type": "integer"
+        },
+        "skin": {
+          "title": "Skin",
+          "type": "integer"
+        }
+      }
+    },
+    "CategoryDetail": {
+      "required": [
+        "category_name"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "category_name": {
+          "title": "Category name",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        }
+      }
+    },
+    "CategoryFoodDetail": {
+      "required": [
+        "category",
+        "food"
+      ],
+      "type": "object",
+      "properties": {
+        "category": {
+          "title": "Category",
+          "type": "integer"
+        },
+        "food": {
+          "title": "Food",
+          "type": "integer"
+        }
+      }
+    },
+    "FoodDetail": {
+      "required": [
+        "name",
+        "price",
+        "saturation"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "price": {
+          "title": "Price",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "saturation": {
+          "title": "Saturation",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        }
+      }
+    },
+    "GameDetail": {
+      "required": [
+        "points"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "points": {
+          "title": "Points",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648
+        },
+        "user": {
+          "title": "User",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "PersonalityDetail": {
+      "required": [
+        "personality"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "personality": {
+          "title": "Personality",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "category": {
+          "title": "Category",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "PetDetail": {
+      "required": [
+        "name",
+        "user"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "age": {
+          "title": "Age",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "is_male": {
+          "title": "Is male",
+          "type": "boolean",
+          "x-nullable": true
+        },
+        "mood_points": {
+          "title": "Mood points",
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "purity_points": {
+          "title": "Purity points",
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "starvation_points": {
+          "title": "Starvation points",
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "user": {
+          "title": "User",
+          "type": "integer"
+        },
+        "personality": {
+          "title": "Personality",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    },
+    "PetPointsIncrease": {
+      "required": [
+        "pet_id",
+        "characteristic",
+        "value"
+      ],
+      "type": "object",
+      "properties": {
+        "pet_id": {
+          "title": "Pet id",
+          "type": "integer"
+        },
+        "characteristic": {
+          "title": "Characteristic",
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "title": "Value",
+          "type": "integer"
+        }
+      }
+    },
+    "PetPoints": {
+      "type": "object",
+      "properties": {
+        "mood_points": {
+          "title": "Mood points",
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "purity_points": {
+          "title": "Purity points",
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-nullable": true
+        },
+        "starvation_points": {
+          "title": "Starvation points",
+          "type": "integer",
+          "maximum": 100,
+          "minimum": 0,
+          "x-nullable": true
+        }
+      }
+    },
+    "SkinDetail": {
+      "required": [
+        "type"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "type": {
+          "title": "Type",
+          "type": "string",
+          "maxLength": 255,
+          "minLength": 1
+        },
+        "description": {
+          "title": "Description",
+          "type": "string",
+          "maxLength": 255,
+          "x-nullable": true
+        },
+        "price": {
+          "title": "Price",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        }
+      }
+    },
+    "UserDetail": {
+      "required": [
+        "phone_number"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1
+        },
+        "phone_number": {
+          "title": "Phone number",
+          "type": "string",
+          "maxLength": 15,
+          "minLength": 1
+        },
+        "created_at": {
+          "title": "Created at",
+          "type": "string",
+          "format": "date-time",
+          "readOnly": true
+        },
+        "balance": {
+          "title": "Balance",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        }
+      }
+    },
+    "UserEditBalance": {
+      "required": [
+        "id"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "balance": {
+          "title": "Balance",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        }
+      }
+    },
+    "UserSetNick": {
+      "required": [
+        "id"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "maxLength": 200,
+          "minLength": 1
+        }
+      }
+    },
+    "UserStorageFoodDetail": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "count": {
+          "title": "Count",
+          "type": "integer",
+          "maximum": 2147483647,
+          "minimum": -2147483648,
+          "x-nullable": true
+        },
+        "user": {
+          "title": "User",
+          "type": "integer",
+          "x-nullable": true
+        },
+        "food": {
+          "title": "Food",
+          "type": "integer",
+          "x-nullable": true
+        }
+      }
+    }
+  }
+}

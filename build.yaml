@@ -1,0 +1,18 @@
+targets:
+  $default:
+    sources:
+      - lib/**
+      - swaggers/**
+      - swaggers2/**
+      - api_files/**
+      - swagger_examples/**
+      - $package$
+    builders:
+      chopper_generator:
+        options:
+          header: "//Generated code"
+      swagger_dart_code_generator:
+        options:
+          input_folder: "api_files/"
+          output_folder: "lib/swagger_generated_api/"
+          override_equals_and_hashcode: true

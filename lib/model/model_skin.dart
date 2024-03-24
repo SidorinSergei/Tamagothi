@@ -27,3 +27,31 @@ class ShopModel {
   }
 }
 
+
+class FoodPageModel {
+  double foodValue;
+
+  FoodPageModel({required this.foodValue});
+
+  void addFood(double value) {
+    foodValue += value;
+    if (foodValue > 100) foodValue = 100;
+  }
+}
+
+class FoodItemModel {
+  final String imagePath;
+  int quantity;
+  double count;
+
+  FoodItemModel({required this.imagePath, required this.quantity, required this.count});
+
+  bool consume() {
+    if (quantity > 0) {
+      quantity--;
+      return true; // Успешно потреблено
+    }
+    return false; // Нечего потреблять
+  }
+}
+

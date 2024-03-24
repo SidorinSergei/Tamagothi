@@ -16,3 +16,22 @@ class ShopPresenter {
   int get coins => model.coins;
   Set<int> get purchasedSkins => model.purchasedSkins;
 }
+
+class FoodPageController {
+  FoodPageModel model;
+  List<FoodItemModel> list;
+
+  FoodPageController({required this.model, required this.list});
+
+  void addFood(FoodItemModel foodItem) {
+    if (foodItem.consume()) {
+      model.addFood(foodItem.count);
+    }
+  }
+
+  void removeEmptyFoodItems() {
+    list.removeWhere((item) => item.quantity == 0);
+  }
+}
+
+

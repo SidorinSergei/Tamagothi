@@ -7,6 +7,7 @@ class MyTextField extends StatelessWidget {
   final double height;
   final String hintText;
   final IconData? icon;
+  final TextEditingController controller; // Добавленный контроллер
 
   const MyTextField({
     Key? key,
@@ -16,13 +17,14 @@ class MyTextField extends StatelessWidget {
     required this.height,
     required this.hintText,
     this.icon,
+    required this.controller,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    double iconSize = screenSize.width < 400 ? 20 : 24; // Пример условия для адаптации
-    double textSize = screenSize.width < 400 ? 14 : 16; // Пример условия для адаптации
+    double iconSize = screenSize.width < 400 ? 20 : 24;
+    double textSize = screenSize.width < 400 ? 14 : 16;
 
     return Positioned(
       left: screenSize.width * left,
@@ -31,6 +33,7 @@ class MyTextField extends StatelessWidget {
         width: screenSize.width * width,
         height: screenSize.height * height,
         child: TextField(
+          controller: controller, // Использование переданного контроллера
           style: TextStyle(fontSize: textSize),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -47,6 +50,7 @@ class MyTextField extends StatelessWidget {
     );
   }
 }
+
 
 class MyText extends StatelessWidget{
   final double top,left,size;
