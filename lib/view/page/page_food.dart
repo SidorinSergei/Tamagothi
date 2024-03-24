@@ -28,6 +28,7 @@ class _FoodPageState extends State<FoodPage> {
   List<UserStorageFoodDetail> userStorageFood = [];
   bool _isLoading = true;
 
+
   Future<List<FoodDetail>> _getFoodDetails() async {
     return await ns.fetchFoodData();
   }
@@ -50,7 +51,7 @@ class _FoodPageState extends State<FoodPage> {
   }
 
   void _processData() {
-    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user.toString() == userId).toList();
+    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user.toString() == USER_ID).toList();
     for (var foodData in userStorageFoodData) {
       FoodDetail? food = foodDetails.firstWhere((element) => element.id == foodData.food);
       var item = FoodItemModel(
@@ -73,7 +74,7 @@ class _FoodPageState extends State<FoodPage> {
       _controller.addFood(foodItem);
       _controller.removeEmptyFoodItems();
     });
-    List<UserStorageFoodDetail> foodDetails = userStorageFood.where((element) => element.user == int.parse(userId!)).toList();
+    List<UserStorageFoodDetail> foodDetails = userStorageFood.where((element) => element.user == int.parse(USER_ID!)).toList();
     RegExp regExp = RegExp(r'\d+');
     var match = regExp.firstMatch(foodItem.imagePath);
     String? foodId = match?.group(0);
@@ -98,6 +99,43 @@ class _FoodPageState extends State<FoodPage> {
         child: Center(
           child: Stack(
             children: <Widget>[
+              _isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: _controller.list.length,
+                itemBuilder: (context, index) {
+                  final foodItem = _controller.list[index];
+                  return GestureDetector(
+                    onTap: () => onFoodItemTapped(foodItem),
+                    child: Padding(
+                      padding: EdgeInsets.all(2.0),
+                      child: Stack(
+                        alignment: Alignment.bottomRight,
+                        children: <Widget>[
+                          Image.asset(
+                            foodItem.imagePath,
+                            width: 100,
+                            height: 100,
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(3.0),
+                            decoration: BoxDecoration(
+                              color: Colors.black54,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Text(
+                              foodItem.quantity.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
               HealthScale(
                 value: 20,
                 size: 0.23,

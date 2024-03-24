@@ -28,13 +28,13 @@ class _AuthorizationState extends State<Authorization> {
     await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
     var user =
     users.firstWhere((element) => element.phoneNumber == phoneNumber);
-    userId = user.id.toString();
+    USER_ID = user.id.toString();
   }
 
   Future<void> fetchPetIdByUser() async {
     List<PetDetail> pets = await ns.fetchPetsData();
-    var pet = pets.firstWhere((element) => element.user == int.parse(userId!));
-    petId = pet.id.toString();
+    var pet = pets.firstWhere((element) => element.user == int.parse(USER_ID!));
+    PET_ID = pet.id.toString();
   }
 
   bool checkVerCode() {
@@ -58,9 +58,9 @@ class _AuthorizationState extends State<Authorization> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/page/page_reg.png'),
-              fit: BoxFit.fill,
-            )),
+          image: AssetImage('assets/images/page/page_reg.png'),
+          fit: BoxFit.fill,
+        )),
         child: Center(
           child: Stack(
             children: <Widget>[

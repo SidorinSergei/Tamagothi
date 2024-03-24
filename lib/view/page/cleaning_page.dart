@@ -17,7 +17,7 @@ class _WashPageState extends State<WashPage> {
   var purityPoints;
 
   void _initializeData() {
-    ns.statesPet('purityPoints',petId!).then((result){
+    ns.statesPet('purityPoints',PET_ID!).then((result){
       setState(() {
         purityPoints = result!.toDouble();
         _isLoading = false; // Update the loading state
@@ -52,13 +52,13 @@ class _WashPageState extends State<WashPage> {
           setState(() {
             if(purityPoints<=100) {
               double previousPoints = purityPoints;
-              purityPoints += 0.005;
+              purityPoints += 0.25;
               cumulativeChange += purityPoints - previousPoints;
             }
-            print(petId);
+            print(PET_ID);
             if (cumulativeChange >= 1) {
               int changeToInt = cumulativeChange.toInt();
-              ns.increasingStates("purity", int.parse(petId!), changeToInt);
+              ns.increasingStates("purity", int.parse(PET_ID!), changeToInt);
               cumulativeChange -= changeToInt;
             }
             position = details.localPosition;

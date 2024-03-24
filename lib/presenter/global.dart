@@ -1,5 +1,5 @@
 library globals;
 
-String? userId;
+String? USER_ID;
 
-String? petId;
+String? PET_ID;
