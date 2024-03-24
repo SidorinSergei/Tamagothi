@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tamagothi/presenter/global.dart';
 import 'package:tamagothi/view/widgets/text_field.dart';
 import 'package:tamagothi/network_service.dart';
 
@@ -155,7 +156,7 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             left: width * 0.22,
             child: ElevatedButton(
               onPressed: () {
-                ns.createPet(nameController.text, 5, int.parse(ageController.text), gender, null);
+                ns.createPet(nameController.text, userId as int, int.parse(ageController.text), gender, null);
                 Navigator.pushReplacementNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(

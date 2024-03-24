@@ -11,6 +11,7 @@ class NetworkService {
 
   void _initialize() async {
     api = AppApi.create();
+
   }
 
   Future<List<UserStorageFoodDetail>> fetchUserStorageFoodData() async {
@@ -82,7 +83,7 @@ class NetworkService {
     return null;
   }
 
-  Future<AuthenticationCodeVerify?> test(String phoneNumber, String code) async {
+  Future<AuthenticationCodeVerify?> createUserProfile(String phoneNumber, String code) async {
     final authCodeVerifyData = AuthenticationCodeVerify(phoneNumber: phoneNumber, code: code);
     final response = await api.authCodeVerifyPost(data: authCodeVerifyData);
     if (response.isSuccessful && response.body != null) {
@@ -136,6 +137,19 @@ class NetworkService {
     } catch (e) {
       print("Exception при отправке: $e");
     }
+  }
+
+  Future<List<UserDetail>> fetchUserIdByPhoneNumberData(String phoneNumber) async {
+    final response = await api.userProfilesGet();
+    late List<UserDetail> users = [];
+    if (response.isSuccessful) {
+      users = response.body ?? [];
+    }
+    return users;
+  }
+
+  Future<void> updateUserStorageFoodData(UserStorageFoodDetail? data, String? id) async {
+    await api.userStorageFoodIdPut(data: data, id: id);
   }
 
 }
