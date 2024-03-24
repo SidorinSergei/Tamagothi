@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tamagothi/view/page/page_character_creation.dart';
 import 'package:tamagothi/view/widgets/button_style.dart';
 import 'package:tamagothi/view/widgets/text_field.dart';
 import 'package:tamagothi/network_service.dart';
@@ -19,16 +20,21 @@ class _AuthorizationState extends State<Authorization> {
   final TextEditingController codeController = TextEditingController();
   String? phoneNumber;
   String? verCode;
+
   NetworkService ns = NetworkService();
 
-  Future<void> createUser() async {
-    ns.createUserProfile(phoneNumber!, verCode!);
+  Future<void> fetchUserIdByPhoneNumber() async {
+    List<UserDetail> users =
+        await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
+    var user =
+        users.firstWhere((element) => element.phoneNumber == phoneNumber);
+    userId = user.id.toString();
   }
 
-  Future<void> fetchUserIdByPhoneNumber() async {
-    List<UserDetail> users = await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
-    var user = users.firstWhere((element) => element.phoneNumber == phoneNumber);
-    userId = user.id.toString();
+  Future<void> fetchPetIdByUser() async {
+    List<PetDetail> pets = await ns.fetchPetsData();
+    var pet = pets.firstWhere((element) => element.user == int.parse(userId!));
+    petId = pet.id.toString();
   }
 
   bool checkVerCode() {
@@ -38,10 +44,14 @@ class _AuthorizationState extends State<Authorization> {
   @override
   void initState() {
     super.initState();
+    print("CODE MESSAGE ${widget.codeMessage}");
     verCode = widget.codeMessage?.split(" ")[2];
     phoneNumber = widget.codeMessage?.split(" ")[6];
-    fetchUserIdByPhoneNumber();
+    print("verCode $verCode");
+    print("phoneNumber $phoneNumber");
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,10 +94,14 @@ class _AuthorizationState extends State<Authorization> {
                 onPressed: () {
                   if (checkVerCode()) {
                     ns.isPhoneNumberInListSync(phoneNumber!).then((result) {
-                      if(result == true){
+                      if (result == true) {
+                        fetchUserIdByPhoneNumber();
                         Navigator.pushReplacementNamed(context, '/home');
+                      } else {
+                        Navigator.pushReplacement(context, MaterialPageRoute(
+                            builder: (BuildContext context) => CharacterCreationPage(phoneNumber: phoneNumber, verCode: verCode,)
+                        ));
                       }
-                      else {createUser();Navigator.pushReplacementNamed(context, '/creation');}
                     });
                   }
                 },

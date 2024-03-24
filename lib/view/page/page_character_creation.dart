@@ -3,7 +3,14 @@ import 'package:tamagothi/presenter/global.dart';
 import 'package:tamagothi/view/widgets/text_field.dart';
 import 'package:tamagothi/network_service.dart';
 
+import '../../swagger_generated_api/app_api.swagger.dart';
+
 class CharacterCreationPage extends StatefulWidget {
+  final String? phoneNumber;
+  final String? verCode;
+
+  CharacterCreationPage({super.key, required this.phoneNumber, this.verCode,});
+
   @override
   _CharacterCreationPageState createState() => _CharacterCreationPageState();
 }
@@ -18,6 +25,18 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
   final TextEditingController ageController = TextEditingController();
   bool gender = true;
   NetworkService ns = NetworkService();
+
+  Future<void> createUser() async {
+    ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
+  }
+
+  Future<void> fetchUserIdByPhoneNumber() async {
+    List<UserDetail> users =
+    await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
+    var user =
+    users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
+    userId = user.id.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,9 +174,15 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             top: height * 0.85,
             left: width * 0.22,
             child: ElevatedButton(
-              onPressed: () {
-                ns.createPet(nameController.text, userId as int, int.parse(ageController.text), gender, null);
+              onPressed: () async {
+                print(1);
+                await createUser();
+                print(2);
+                await fetchUserIdByPhoneNumber();
+                print(3);
+                ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
                 Navigator.pushReplacementNamed(context, '/home');
+
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,

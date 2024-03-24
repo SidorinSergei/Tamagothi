@@ -48,7 +48,6 @@ class _WashPageState extends State<WashPage> {
       body: GestureDetector(
         onPanUpdate: (details) {
           setState(() {
-            print(purityPoints);
             if(purityPoints<=100) {
               double previousPoints = purityPoints;
               purityPoints += 0.005;

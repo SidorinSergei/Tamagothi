@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:tamagothi/main.dart';
 import 'package:tamagothi/model/model_skin.dart';
 import 'package:tamagothi/presenter/global.dart';
 import 'package:tamagothi/presenter/presenter.dart';
@@ -52,8 +51,6 @@ class _FoodPageState extends State<FoodPage> {
 
   void _processData() {
     List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user.toString() == userId).toList();
-    print("USERID: $userId");
-    print(foodDetails);
     for (var foodData in userStorageFoodData) {
       FoodDetail? food = foodDetails.firstWhere((element) => element.id == foodData.food);
       var item = FoodItemModel(

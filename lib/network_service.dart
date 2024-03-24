@@ -1,4 +1,3 @@
-import "dart:convert";
 
 import "swagger_generated_api/app_api.swagger.dart";
 
@@ -150,6 +149,17 @@ class NetworkService {
 
   Future<void> updateUserStorageFoodData(UserStorageFoodDetail? data, String? id) async {
     await api.userStorageFoodIdPut(data: data, id: id);
+  }
+
+
+  Future<List<PetDetail>> fetchPetsData() async {
+    final response = await api.petsGet();
+    late List<PetDetail> pets = [];
+    if (response.isSuccessful) {
+      pets = response.body ?? [];
+    }
+    return pets;
+
   }
 
 }
