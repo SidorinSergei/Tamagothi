@@ -59,8 +59,12 @@ class _AuthorizationState extends State<Authorization> {
               MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.585,radius: 30,
                 onPressed: (){
                   if (checkVerCode()) {
-                    createUser();
-                    Navigator.pushReplacementNamed(context, '/home');
+                    ns.isPhoneNumberInListSync(phoneNumber!).then((result) {
+                      if(result == true){
+                        Navigator.pushReplacementNamed(context, '/home');
+                      }
+                      else {createUser();Navigator.pushReplacementNamed(context, '/creation');}
+                    });
                   }
                 },text: 'Войти',),
               MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.65,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/');},text: 'Назад',),

@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
         body: PageView(
           children: [
             WashPage(),
-            CharacterCreationPage(),
             FoodPage(model: foodPageModel,),
             const HomePage(),
             ShopPage(),

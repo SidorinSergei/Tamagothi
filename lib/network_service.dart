@@ -11,7 +11,6 @@ class NetworkService {
 
   void _initialize() async {
     api = AppApi.create();
-
   }
 
   Future<List<UserStorageFoodDetail>> fetchUserStorageFoodData() async {
@@ -98,9 +97,45 @@ class NetworkService {
     return null;
   }
 
-// void createUserProfile(String phoneNumber) async {
-//   UserDetail? data = UserDetail(name: "TEST", phoneNumber: phoneNumber, balance: 100);
-//   final response = await api.userProfilesPost(data: data);
-//   print(response.body);
-// }
+  Future<List<UserDetail>> users(String phone) async{
+    final user =await api.userProfilesGet();
+    return user.body!;
+  }
+  Future<bool> isPhoneNumberInList(String phoneNumber) async {
+    final List<UserDetail> userList = await users(phoneNumber);
+    return userList.any((user) => user.phoneNumber == phoneNumber);
+  }
+
+  Future<bool> isPhoneNumberInListSync(String phoneNumber) async {
+    return await isPhoneNumberInList(phoneNumber);
+  }
+
+  Future<int?> statesPet(String fieldName,String id) async {
+    final user = await api.petsIdGet(id: id);
+      switch (fieldName) {
+        case 'moodPoints':
+          return user.body!.moodPoints;
+        case 'purityPoints':
+          return user.body!.purityPoints;
+        case 'starvationPoints':
+          return user.body!.starvationPoints;
+        default:
+          return null;
+      }
+  }
+
+  void increasingStates(String characteristic, int petId,int value) async{
+    final PetPointsIncrease data = PetPointsIncrease(petId: petId, characteristic: characteristic, value: value);
+    try {
+      final increasingStates = await api.petsIncreasePost(data: data);
+      if (increasingStates.isSuccessful) {
+        //print("отправлено");
+      } else {
+        print("Ошибка при отправке: ${increasingStates.error}");
+      }
+    } catch (e) {
+      print("Exception при отправке: $e");
+    }
+  }
+
 }

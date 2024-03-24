@@ -50,13 +50,12 @@ class _RegistrationState extends State<Registration> {
           child: Stack(
             children: <Widget>[
               //const MyTextField(left: 0.29, top: 0.42, width: 0.45, height: 0.045, hintText: 'Email',icon: Icons.person,),
-              MyTextField(left: 0.29, top: 0.52, width: 0.45, height: 0.045, hintText: 'Номер Телофона',icon: Icons.mobile_screen_share,controller: phoneController,),
+              MyTextField(left: 0.29, top: 0.52, width: 0.45, height: 0.045, hintText: 'Номер Телефона',icon: Icons.mobile_screen_share,controller: phoneController,),
               //const MyTextField(left: 0.29, top: 0.56, width: 0.45, height: 0.045, hintText: 'Confirmation',icon: Icons.key,),
               //MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.62,radius: 30, onPressed: (){Navigator.pushReplacementNamed(context, '/creation');},text: 'Зарегистрироваться',),
               MyButtonStyle(path: 'assets/images/button_reg.png',  width: 0.45, height: 0.05,leftSize: 0.29, topSize: 0.585,radius: 30,
                 onPressed: (){
                   _getAuthCodeSendPostData().then((value) {
-                    print(message);
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

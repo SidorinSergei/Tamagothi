@@ -91,7 +91,7 @@ class _FoodPageState extends State<FoodPage> {
           child: Stack(
             children: <Widget>[
               HealthScale(
-                value: widget.model.foodValue,
+                value: 20,
                 size: 0.23,
                 leftSize: 0.39,
                 topSize: 0.07,

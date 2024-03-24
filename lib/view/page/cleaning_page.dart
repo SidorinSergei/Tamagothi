@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tamagothi/view/widgets/scale.dart';
+import 'package:tamagothi/network_service.dart';
 
 class WashPage extends StatefulWidget {
   @override
@@ -9,10 +11,24 @@ class _WashPageState extends State<WashPage> {
   Offset startPosition = Offset.zero; // Исходная позиция губки
   Offset position = Offset.zero; // Текущая позиция губки
   bool isCleaning = false; // Флаг "мытья"
+  NetworkService ns = NetworkService();
+  bool _isLoading = true;
+  var purityPoints;
+
+  void _initializeData() {
+    ns.statesPet('purityPoints','8').then((result){
+      setState(() {
+        purityPoints = result?.toDouble();
+        _isLoading = false; // Update the loading state
+      });
+      });
+  }
+  double cumulativeChange = 0;
 
   @override
   void initState() {
     super.initState();
+    _initializeData();
     WidgetsBinding.instance.addPostFrameCallback((_) => _setStartPosition());
   }
 
@@ -32,14 +48,25 @@ class _WashPageState extends State<WashPage> {
       body: GestureDetector(
         onPanUpdate: (details) {
           setState(() {
+            print(purityPoints);
+            if(purityPoints<=100) {
+              double previousPoints = purityPoints;
+              purityPoints += 0.005;
+              cumulativeChange += purityPoints - previousPoints;
+            }
+            if (cumulativeChange >= 1) {
+              int changeToInt = cumulativeChange.toInt();
+              ns.increasingStates("purity", 8, changeToInt);
+              cumulativeChange -= changeToInt;
+            }
             position = details.localPosition;
             isCleaning = characterRect.contains(position);
           });
         },
         onPanEnd: (details) {
           setState(() {
-            position = startPosition; // Возвращаем губку на начальную позицию
-            isCleaning = false; // Сбрасываем флаг "мытья"
+            position = startPosition;
+            isCleaning = false;
           });
         },
         child: Stack(
@@ -50,6 +77,18 @@ class _WashPageState extends State<WashPage> {
                   image: AssetImage('assets/images/page/cleaning_page.png'),
                   fit: BoxFit.cover,
                 ),
+              ),
+            ),
+            if(_isLoading==false)
+            HealthScale(
+              value: purityPoints,
+              size: 0.23,
+              leftSize: 0.39,
+              topSize: 0.07,
+              petImage: Image.asset(
+                'assets/images/washing.png',
+                width: screenSize.width * 0.23,
+                height: screenSize.height * 0.23,
               ),
             ),
             Positioned(
@@ -67,7 +106,8 @@ class _WashPageState extends State<WashPage> {
                   padding: EdgeInsets.all(8.0),
                   color: Colors.black54,
                   child: Text(
-                    'Очищаю...',
+
+                    (purityPoints >= 100) ? 'Чист' : 'Очищаю...',
                     style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
