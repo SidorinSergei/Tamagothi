@@ -2281,7 +2281,7 @@ class UserStorageFoodDetail {
   @JsonKey(name: 'id')
   final int? id;
   @JsonKey(name: 'count')
-  final int? count;
+  int? count;
   @JsonKey(name: 'user')
   final int? user;
   @JsonKey(name: 'food')

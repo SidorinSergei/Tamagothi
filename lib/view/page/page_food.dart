@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:tamagothi/main.dart';
 import 'package:tamagothi/model/model_skin.dart';
+import 'package:tamagothi/presenter/global.dart';
 import 'package:tamagothi/presenter/presenter.dart';
 import 'package:tamagothi/swagger_generated_api/app_api.swagger.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
@@ -49,13 +51,15 @@ class _FoodPageState extends State<FoodPage> {
   }
 
   void _processData() {
-    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user == 5).toList();
-
-    for (int i = 0; i < userStorageFoodData.length; i++) {
+    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user.toString() == userId).toList();
+    print("USERID: $userId");
+    print(foodDetails);
+    for (var foodData in userStorageFoodData) {
+      FoodDetail? food = foodDetails.firstWhere((element) => element.id == foodData.food);
       var item = FoodItemModel(
-        imagePath: 'assets/images/food_${foodDetails[userStorageFoodData[i].id!.toInt()].id}.png',
-        quantity: userStorageFoodData[i].count!.toInt(),
-        count: foodDetails[userStorageFoodData[i].id!.toInt()].saturation.toDouble(),
+        imagePath: 'assets/images/food_${food.id}.png',
+        quantity: foodData.count!.toInt(),
+        count: food.saturation.toDouble(),
       );
       _controller.list.add(item);
     }
@@ -72,6 +76,13 @@ class _FoodPageState extends State<FoodPage> {
       _controller.addFood(foodItem);
       _controller.removeEmptyFoodItems();
     });
+    List<UserStorageFoodDetail> foodDetails = userStorageFood.where((element) => element.user == int.parse(userId!)).toList();
+    RegExp regExp = RegExp(r'\d+');
+    var match = regExp.firstMatch(foodItem.imagePath);
+    String? foodId = match?.group(0);
+    UserStorageFoodDetail? firstFood = foodDetails.firstWhere((element) => element.food == int.parse(foodId!));
+    firstFood.count = foodItem.quantity;
+    ns.updateUserStorageFoodData(firstFood, firstFood.id.toString());
   }
 
 
