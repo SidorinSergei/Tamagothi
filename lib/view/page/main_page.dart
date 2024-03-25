@@ -13,29 +13,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   NetworkService ns = NetworkService(); // Экземпляр сервиса для работы с сетью
 
-  var foodValue;
-  var purityValue;
-  var moodValue;
+  double foodValue = 0.0;
+  double purityValue = 0.0;
+  double moodValue = 0.0;
   bool _isLoading = true;
+  bool _isLoading1 = true;
+  bool _isLoading2 = true;
 
   // Пример метода для обновления значений (может быть вызван, например, по таймеру или в ответ на действия пользователя)
-  void _initializeData() {
-    ns.statesPet('purityPoints',petId!).then((result){
+  void _initializeData() async {
+    await ns.statesPet('purityPoints',petId!).then((result){
       setState(() {
         purityValue = result!.toDouble();
         _isLoading = false; // Update the loading state
       });
     });
-    ns.statesPet('starvationPoints',petId!).then((result){
+   await ns.statesPet('starvationPoints',petId!).then((result){
       setState(() {
         foodValue = result!.toDouble();
-        _isLoading = false; // Update the loading state
+        _isLoading1 = false; // Update the loading state
       });
     });
-    ns.statesPet('moodPoints',petId!).then((result){
+    await ns.statesPet('moodPoints',petId!).then((result){
       setState(() {
         moodValue = result!.toDouble();
-        _isLoading = false; // Update the loading state
+        _isLoading2 = false; // Update the loading state
       });
     });
   }
@@ -63,8 +65,8 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Positioned(left: screenSize.width*0.095, top: screenSize.height*(-0.07), child: Image.asset('assets/pers/pers_1.png',width: screenSize.width*0.83,height: screenSize.height*0.83,),),
               if(_isLoading==false)HealthScale(value: foodValue, size: 0.23, leftSize: 0.06, topSize: 0.52, petImage: Image.asset('assets/images/food.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
-              if(_isLoading==false)HealthScale(value: purityValue, size: 0.23, leftSize: 0.385, topSize: 0.52, petImage: Image.asset('assets/images/washing.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
-              if(_isLoading==false)HealthScale(value: moodValue, size: 0.23, leftSize: 0.7, topSize: 0.52, petImage: Image.asset('assets/images/sleep.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
+              if(_isLoading1==false)HealthScale(value: purityValue, size: 0.23, leftSize: 0.385, topSize: 0.52, petImage: Image.asset('assets/images/washing.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
+              if(_isLoading2==false)HealthScale(value: moodValue, size: 0.23, leftSize: 0.7, topSize: 0.52, petImage: Image.asset('assets/images/sleep.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
               // Добавьте здесь другие виджеты, такие как кнопки для вызова _updateValues
             ],
           ),
