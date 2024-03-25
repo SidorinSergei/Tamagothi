@@ -20,19 +20,19 @@ class _HomePageState extends State<HomePage> {
 
   // Пример метода для обновления значений (может быть вызван, например, по таймеру или в ответ на действия пользователя)
   void _initializeData() {
-    ns.statesPet('purityPoints',petId!).then((result){
+    ns.statesPet('purityPoints',PET_ID!).then((result){
       setState(() {
         purityValue = result!.toDouble();
         _isLoading = false; // Update the loading state
       });
     });
-    ns.statesPet('starvationPoints',petId!).then((result){
+    ns.statesPet('starvationPoints',PET_ID!).then((result){
       setState(() {
         foodValue = result!.toDouble();
         _isLoading = false; // Update the loading state
       });
     });
-    ns.statesPet('moodPoints',petId!).then((result){
+    ns.statesPet('moodPoints',PET_ID!).then((result){
       setState(() {
         moodValue = result!.toDouble();
         _isLoading = false; // Update the loading state

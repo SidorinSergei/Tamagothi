@@ -98,9 +98,12 @@ class _ShopPageState extends State<ShopPage> {
         List<int> updatedUserSkin = await purchasedSkins(detailUserSkin, userSkin);
         // Обновляем состояние с новым балансом и списком скинов
         setState(()  {
-          userSkin = updatedUserSkin;
-          balance = balance! - skinPrice;
-
+          if ((BALANCE! - skinPrice) >= 0) {
+            ns.updateBalance(int.parse(USER_ID!), (BALANCE! - skinPrice));
+            BALANCE = (BALANCE! - skinPrice);
+            userSkin = updatedUserSkin;
+            balance = balance! - skinPrice;
+          }
         });
       }
 
