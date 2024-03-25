@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:tamagothi/presenter/global.dart';
 
+import "dart:async";
+
 import "swagger_generated_api/app_api.swagger.dart";
 
 class NetworkService {
@@ -102,6 +104,14 @@ class NetworkService {
     final user =await api.userProfilesGet();
     return user.body!;
   }
+  Future<List<UserDetail>> userBalance()async{
+    final response =await api.userProfilesGet();
+    late List<UserDetail> userList=[];
+    if (response.isSuccessful) {
+      userList = response.body ?? [];
+    }
+    return userList;
+  }
   Future<bool> isPhoneNumberInList(String phoneNumber) async {
     final List<UserDetail> userList = await users(phoneNumber);
     return userList.any((user) => user.phoneNumber == phoneNumber);
@@ -181,6 +191,30 @@ class NetworkService {
     final data = UserStorageSkinDetail(user: user,skin: skin);
     final response = await api.userStorageSkinPost(data: data);
     return response.isSuccessful;
+  }
+
+  Future<List<SkinDetail>> skins() async{
+    final response = await api.skinGet();
+    late List<SkinDetail> skins=[];
+    if (response.isSuccessful) {
+      skins = response.body ?? [];
+    }
+    return skins;
+  }
+
+  Future<List<UserStorageSkinDetail>> userSkinId() async{
+    final response = await api.userStorageSkinGet();
+    List<UserStorageSkinDetail> skin = [];
+    if (response.isSuccessful) {
+      skin = response.body ?? [];
+    }
+    return skin;
+  }
+
+  Future<int?> updateBalance(int id, int balance)async{
+    final data = await UserEditBalance(id: id,balance: balance);
+    final response = await api.userProfilesEditBalancePost(data: data);
+    return response.body!.balance;
   }
 
 }

@@ -8,7 +8,7 @@ class Skin {
 }
 
 class ShopModel {
-  int coins = 100; // Изначальное количество монет
+  int coins = 10000; // Изначальное количество монет
   Set<int> purchasedSkins = Set(); // Индексы купленных скинов
 
   List<int> prices = [50, 70];
