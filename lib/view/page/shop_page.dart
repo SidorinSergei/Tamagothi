@@ -96,11 +96,10 @@ class _ShopPageState extends State<ShopPage> {
         // Получаем обновлённый список купленных скинов
         List<UserStorageSkinDetail> detailUserSkin = await _userSkin();
         List<int> updatedUserSkin = await purchasedSkins(detailUserSkin, userSkin);
-
         // Обновляем состояние с новым балансом и списком скинов
         setState(()  {
           userSkin = updatedUserSkin;
-
+          balance = balance! - skinPrice;
 
         });
       }
@@ -115,6 +114,7 @@ class _ShopPageState extends State<ShopPage> {
         balance = detail.balance!;
       }
     }
+    print(balance);
     return balance;
   }
 
