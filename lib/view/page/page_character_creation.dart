@@ -39,6 +39,21 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
     ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
   }
 
+  Future<int> balanceUs(List<UserDetail> userDetail,int balance) async{
+    for(var detail in userDetail){
+      if(detail.id == int.parse(USER_ID!)){
+        balance = detail.balance!;
+      }
+    }
+    return balance;
+  }
+
+
+  Future<void> fetchBalance() async {
+    List<UserDetail> response = await ns.userBalance();
+    BALANCE = await balanceUs(response, BALANCE!);
+  }
+
   Future<void> fetchUserIdByPhoneNumber() async {
     List<UserDetail> users =
     await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
@@ -196,6 +211,7 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
                 await us();
                 await  ns.createPet(nameController.text, int.parse(USER_ID!), int.parse(ageController.text), gender, null);
                 await fetchPetIdByUser();
+                await fetchBalance();
                 await _grandUserWithInitialFoodStorage();
                 Navigator.pushReplacementNamed(context, '/home');
               },

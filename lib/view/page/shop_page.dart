@@ -79,8 +79,8 @@ class _ShopPageState extends State<ShopPage> {
       return;
     } else {
       int skinPrice = prices[index];
-
-      if ((BALANCE! - skinPrice) >= 0) {
+      print(skinPrice);
+      if ((BALANCE! - skinPrice) < 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Недостаточно средств для покупки скина!'),

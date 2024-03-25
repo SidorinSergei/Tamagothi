@@ -107,12 +107,13 @@ class _AuthorizationState extends State<Authorization> {
                 radius: 30,
                 onPressed: () {
                   if (checkVerCode()) {
-                    ns.isPhoneNumberInListSync(phoneNumber!).then((result) {
+                    ns.isPhoneNumberInListSync(phoneNumber!).then((result) async {
                       if (result == true) {
-                        fetchUserIdByPhoneNumber();
-                        fetchPetIdByUser();
-                        fetchBalance();
-                        Navigator.pushReplacementNamed(context, '/home');
+                        await fetchUserIdByPhoneNumber();
+                        await fetchPetIdByUser();
+                        await fetchBalance();
+                        print("BALANCE $BALANCE");
+                        await Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         Navigator.pushReplacement(context, MaterialPageRoute(
                             builder: (BuildContext context) => CharacterCreationPage(phoneNumber: phoneNumber, verCode: verCode,)
