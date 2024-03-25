@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class TamagothiGallery extends StatefulWidget {
   final List<String> images;
   final Function(int) onSkinDoubleTapped;
-  final Set<int> purchasedSkins;
+  final List<int> purchasedSkins;
   final List<int> prices;
 
   TamagothiGallery({super.key,
