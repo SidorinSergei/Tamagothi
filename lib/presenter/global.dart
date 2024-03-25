@@ -1,5 +1,9 @@
 library globals;
 
-String? userId;
+String? USER_ID;
 
-String? petId;
+String? PHONE_NUMBER;
+
+int? BALANCE;
+
+String? PET_ID;

@@ -24,8 +24,11 @@ class _FoodPageState extends State<FoodPage> {
   );
   NetworkService ns = NetworkService();
 
+  List<FoodDetail> storeFoods = [];
   List<FoodDetail> foodDetails = [];
   List<UserStorageFoodDetail> userStorageFood = [];
+  List<UserStorageFoodDetail> userExistingStorageFoodData = [];
+  List<UserStorageFoodDetail> userMissingStorageFoodData = [];
   bool _isLoading = true;
 
   Future<List<FoodDetail>> _getFoodDetails() async {
@@ -49,39 +52,83 @@ class _FoodPageState extends State<FoodPage> {
     });
   }
 
+  Future<bool> isFileExist(String filePath) async {
+    bool fileExists = await ns.checkIfFileExists(filePath);
+    return fileExists;
+  }
+
+  //TODO: выдать юзеру при регистрации всю еду (посмотреть, какая отсутствует)
+
+
+  Future<void> getValidFood(String filePath, FoodDetail foodDetail, int index) async {
+    if (await ns.checkIfFileExists(filePath)) {
+      storeFoods.add(foodDetail);
+    }
+  }
+
   void _processData() {
-    List<UserStorageFoodDetail> userStorageFoodData = userStorageFood.where((foodDetails) => foodDetails.user.toString() == userId).toList();
-    for (var foodData in userStorageFoodData) {
-      FoodDetail? food = foodDetails.firstWhere((element) => element.id == foodData.food);
+    userExistingStorageFoodData = userStorageFood
+        .where((foodDetails) => foodDetails.user.toString() == USER_ID)
+        .toList();
+    for (var foodData in userExistingStorageFoodData) {
+      FoodDetail? userFood =
+          foodDetails.firstWhere((element) => element.id == foodData.food);
+
       var item = FoodItemModel(
-        imagePath: 'assets/images/food_${food.id}.png',
+        id: userFood.id!,
+        imagePath: 'assets/images/food_${userFood.id}.png',
         quantity: foodData.count!.toInt(),
-        count: food.saturation.toDouble(),
+        count: userFood.saturation.toDouble(),
       );
       _controller.list.add(item);
     }
+    for (int i = 0; i < foodDetails.length; i++) {
+      getValidFood('assets/images/food_${foodDetails[i].id}.png', foodDetails[i], i);
+    }
+
   }
+
+  void buyFood(FoodDetail foodItem) {
+    UserStorageFoodDetail data = UserStorageFoodDetail();
+    FoodItemModel item = _controller.list.firstWhere((element) => element.id == foodItem.id);
+
+    data.id = userExistingStorageFoodData.firstWhere((element) => element.food == foodItem.id).id;
+    data.count = item.quantity + 1;
+    data.user = int.parse(USER_ID!);
+    data.food = foodItem.id;
+
+    setState(() {
+      _controller.addToStorage(item);
+      ns.buyFoodPost(data, 0);
+      if ((BALANCE! - foodItem.price) >= 0) {
+        ns.updateBalance(int.parse(USER_ID!), (BALANCE! - foodItem.price));
+        BALANCE = (BALANCE! - foodItem.price);
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _initializeData();
   }
 
-
   void onFoodItemTapped(FoodItemModel foodItem) {
     setState(() {
       _controller.addFood(foodItem);
       _controller.removeEmptyFoodItems();
     });
-    List<UserStorageFoodDetail> foodDetails = userStorageFood.where((element) => element.user == int.parse(userId!)).toList();
+    List<UserStorageFoodDetail> foodDetails = userStorageFood
+        .where((element) => element.user == int.parse(USER_ID!))
+        .toList();
     RegExp regExp = RegExp(r'\d+');
     var match = regExp.firstMatch(foodItem.imagePath);
     String? foodId = match?.group(0);
-    UserStorageFoodDetail? firstFood = foodDetails.firstWhere((element) => element.food == int.parse(foodId!));
+    UserStorageFoodDetail? firstFood =
+        foodDetails.firstWhere((element) => element.food == int.parse(foodId!));
     firstFood.count = foodItem.quantity;
     ns.updateUserStorageFoodData(firstFood, firstFood.id.toString());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +145,65 @@ class _FoodPageState extends State<FoodPage> {
         child: Center(
           child: Stack(
             children: <Widget>[
+              Positioned(
+                  left: screenSize.width * 0.0,
+                  top: screenSize.height * 0.1,
+                  width: screenSize.width * 1.0,
+                  height: screenSize.height * 0.1,
+                  child: _isLoading
+                      ? const Center(child: CircularProgressIndicator())
+                      : Container(
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image:
+                                  AssetImage("assets/images/store_shelf.png"),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: storeFoods.length,
+                            itemBuilder: (context, index) {
+                              final foodItem = storeFoods[index];
+                              return GestureDetector(
+                                onTap: () => buyFood(foodItem),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(10, 0, 10, 15),
+                                  child: Stack(
+                                    alignment: Alignment.bottomRight,
+                                    children: <Widget>[
+                                      Image.asset(
+                                        'assets/images/food_${foodItem.id}.png',
+                                        width: 80,
+                                        height: 75,
+                                      ),
+                                      Container(
+                                        padding: const EdgeInsets.all(3.0),
+                                        decoration: const BoxDecoration(
+                                          color: Colors.yellow,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Text(
+                                          foodItem.price.toString(),
+                                          style: const TextStyle(
+                                            color: Colors.black54,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )),
               HealthScale(
                 value: 20,
                 size: 0.23,
                 leftSize: 0.39,
-                topSize: 0.07,
+                topSize: 0.17,
                 petImage: Image.asset(
                   'assets/images/food.png',
                   width: screenSize.width * 0.23,
@@ -123,43 +224,45 @@ class _FoodPageState extends State<FoodPage> {
                 top: screenSize.height * 0.82,
                 width: screenSize.width * 0.8,
                 height: screenSize.height * 0.13,
-                child: _isLoading ? const Center(child: CircularProgressIndicator()) : ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _controller.list.length,
-                  itemBuilder: (context, index) {
-                    final foodItem = _controller.list[index];
-                    return GestureDetector(
-                      onTap: () => onFoodItemTapped(foodItem),
-                      child: Padding(
-                        padding: EdgeInsets.all(2.0),
-                        child: Stack(
-                          alignment: Alignment.bottomRight,
-                          children: <Widget>[
-                            Image.asset(
-                              foodItem.imagePath,
-                              width: 100,
-                              height: 100,
-                            ),
-                            Container(
-                              padding: EdgeInsets.all(3.0),
-                              decoration: BoxDecoration(
-                                color: Colors.black54,
-                                shape: BoxShape.circle,
+                child: _isLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: _controller.list.length,
+                        itemBuilder: (context, index) {
+                          final foodItem = _controller.list[index];
+                          return GestureDetector(
+                            onTap: () => onFoodItemTapped(foodItem),
+                            child: Padding(
+                              padding: EdgeInsets.all(2.0),
+                              child: Stack(
+                                alignment: Alignment.bottomRight,
+                                children: <Widget>[
+                                  Image.asset(
+                                    foodItem.imagePath,
+                                    width: 100,
+                                    height: 100,
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black54,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Text(
+                                      foodItem.quantity.toString(),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              child: Text(
-                                foodItem.quantity.toString(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
               ),
             ],
           ),

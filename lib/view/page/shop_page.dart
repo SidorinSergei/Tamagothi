@@ -78,7 +78,7 @@ class _ShopPageState extends State<ShopPage> {
       );
       return;
     } else {
-      bool success = await ns.buySkin(int.parse(userId!), index + 1);
+      bool success = await ns.buySkin(int.parse(USER_ID!), index + 1);
       if (!success) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -98,9 +98,12 @@ class _ShopPageState extends State<ShopPage> {
         List<int> updatedUserSkin = await purchasedSkins(detailUserSkin, userSkin);
         // Обновляем состояние с новым балансом и списком скинов
         setState(()  {
-          userSkin = updatedUserSkin;
-          balance = balance! - skinPrice;
-
+          if ((BALANCE! - skinPrice) >= 0) {
+            ns.updateBalance(int.parse(USER_ID!), (BALANCE! - skinPrice));
+            BALANCE = (BALANCE! - skinPrice);
+            userSkin = updatedUserSkin;
+            balance = balance! - skinPrice;
+          }
         });
       }
 
@@ -110,7 +113,7 @@ class _ShopPageState extends State<ShopPage> {
 
   Future<int> balanceUs(List<UserDetail> userDetail,int balance) async{
     for(var detail in userDetail){
-      if(detail.id == int.parse(userId!)){
+      if(detail.id == int.parse(USER_ID!)){
         balance = detail.balance!;
       }
     }
@@ -121,7 +124,7 @@ class _ShopPageState extends State<ShopPage> {
 
   Future<List<int>> purchasedSkins(List<UserStorageSkinDetail> skinDetail, List<int> userIdSkin) async{
     for(var detail in skinDetail){
-      if (detail.user == int.parse(userId!)){
+      if (detail.user == int.parse(USER_ID!)){
         userIdSkin.add(detail.skin! - 1);
         //print(userIdSkin);
       }

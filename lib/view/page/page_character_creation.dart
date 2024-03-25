@@ -30,30 +30,30 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
     await ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
     List<UserDetail> users = await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
     var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
-    userId = await user.id.toString();
+    USER_ID = await user.id.toString();
     List<PetDetail> pets = await ns.fetchPetsData();
-    print('${userId}');
+
   }
 
   Future<void> createUser() async {
     ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
-    print('${ns.createUserProfile(widget.phoneNumber!, widget.verCode!)}+сука');
   }
 
   Future<void> fetchUserIdByPhoneNumber() async {
     List<UserDetail> users =
     await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
-    //print(users);
-    //print('${widget.phoneNumber}+rggg');
     var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
-    userId = await user.id.toString();
+    USER_ID = await user.id.toString();
   }
   Future<void> fetchPetIdByUser() async {
     List<PetDetail> pets = await ns.fetchPetsData();
     //print('${userId}+rggg');
-    var pet = await pets.firstWhere((element) => element.user == int.parse(userId!));
-    petId = await pet.id.toString();
-    //print(petId);
+    var pet = await pets.firstWhere((element) => element.user == int.parse(USER_ID!));
+    PET_ID = await pet.id.toString();
+  }
+
+  Future<void> _grandUserWithInitialFoodStorage() async {
+    
   }
 
   @override
@@ -194,10 +194,10 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
             child: ElevatedButton(
               onPressed: () async {
                 await us();
-                await  ns.createPet(nameController.text, int.parse(userId!), int.parse(ageController.text), gender, null);
+                await  ns.createPet(nameController.text, int.parse(USER_ID!), int.parse(ageController.text), gender, null);
                 await fetchPetIdByUser();
-
-                  Navigator.pushReplacementNamed(context, '/home');
+                await _grandUserWithInitialFoodStorage();
+                Navigator.pushReplacementNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,

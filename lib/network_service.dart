@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:tamagothi/presenter/global.dart';
 
 import "dart:async";
 
@@ -171,6 +173,26 @@ class NetworkService {
 
   }
 
+  Future<bool> checkIfFileExists(String filePath) async {
+    try {
+      await rootBundle.load(filePath);
+      return true;
+    } catch (e) {
+      return false;
+    }
+
+  }
+
+  Future<void> buyFoodPost(UserStorageFoodDetail data, int price,) async {
+    await api.userStorageFoodIdPut(data: data, id: data.id.toString());
+  }
+
+  Future<bool> buySkin(int user,int skin) async{
+    final data = UserStorageSkinDetail(user: user,skin: skin);
+    final response = await api.userStorageSkinPost(data: data);
+    return response.isSuccessful;
+  }
+
   Future<List<SkinDetail>> skins() async{
     final response = await api.skinGet();
     late List<SkinDetail> skins=[];
@@ -189,22 +211,10 @@ class NetworkService {
     return skin;
   }
 
-  Future<bool> buySkin(int user,int skin) async{
-    final data = await UserStorageSkinDetail(user: user,skin: skin);
-    final response = await api.userStorageSkinPost(data: data);
-    if(response.isSuccessful)
-      return true;
-    else false;
-    return false;
-  }
+  Future<void> updateBalance(int id, int balance)async{
+    final data = UserDetail(id: id, phoneNumber: PHONE_NUMBER!, balance: balance, name: "user", createdAt: DateTime(2024));
+    await api.userProfilesIdPut(data: data, id: USER_ID);
 
-  Future<int?> updateBalance(int id, int balance)async{
-    //final data = await UserDetail(id: ,phoneNumber: ,balance: ,name: )
-    final data = await UserEditBalance(id: id,balance: balance);
-
-    //api.userProfilesIdPut(data: data, id: id)
-    final response = await api.userProfilesEditBalancePost(data: data);
-    return response.body!.balance;
   }
 
 }

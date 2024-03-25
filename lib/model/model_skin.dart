@@ -43,8 +43,9 @@ class FoodItemModel {
   final String imagePath;
   int quantity;
   double count;
+  int id;
 
-  FoodItemModel({required this.imagePath, required this.quantity, required this.count});
+  FoodItemModel({required this.imagePath, required this.quantity, required this.count, required this.id});
 
   bool consume() {
     if (quantity > 0) {
@@ -52,6 +53,10 @@ class FoodItemModel {
       return true; // Успешно потреблено
     }
     return false; // Нечего потреблять
+  }
+
+  void buy() {
+    quantity++;
   }
 }
 

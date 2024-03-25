@@ -33,12 +33,10 @@ class MyApp extends StatelessWidget {
         '/home': (context) => Scaffold(
         body: PageView(
           children: [
-            ShopPage(),
-            HomePage(),
-
-
             FoodPage(model: foodPageModel,),
+            const HomePage(),
             WashPage(),
+            ShopPage(),
             const MinigamesPage(),
           ],
         ),

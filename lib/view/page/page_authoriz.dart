@@ -23,24 +23,46 @@ class _AuthorizationState extends State<Authorization> {
 
   NetworkService ns = NetworkService();
 
-  Future<void> fetchIdBy() async {
-    List<UserDetail> users = await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
-    var user = await users.firstWhere((element) => element.phoneNumber == phoneNumber);
-    userId =await user.id.toString();
+  Future<void> fetchUserIdByPhoneNumber() async {
+    List<UserDetail> users =
+    await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
+    var user =
+    users.firstWhere((element) => element.phoneNumber == phoneNumber);
+    USER_ID = user.id.toString();
+  }
+
+  Future<void> fetchPetIdByUser() async {
     List<PetDetail> pets = await ns.fetchPetsData();
-    var pet =await pets.firstWhere((element) => element.user == int.parse(userId!));
-    petId =await pet.id.toString();
+    var pet = pets.firstWhere((element) => element.user == int.parse(USER_ID!));
+    PET_ID = pet.id.toString();
   }
 
   bool checkVerCode() {
     return verCode == codeController.text;
   }
 
+  Future<int> balanceUs(List<UserDetail> userDetail,int balance) async{
+    for(var detail in userDetail){
+      if(detail.id == int.parse(USER_ID!)){
+        balance = detail.balance!;
+      }
+    }
+    return balance;
+  }
+
+
+  Future<void> fetchBalance() async {
+    List<UserDetail> response = await ns.userBalance();
+    BALANCE = await balanceUs(response, BALANCE!);
+  }
+
   @override
   void initState() {
     super.initState();
+    BALANCE = 0;
     verCode = widget.codeMessage?.split(" ")[2];
     phoneNumber = widget.codeMessage?.split(" ")[6];
+    PHONE_NUMBER = phoneNumber;
   }
 
 
@@ -53,9 +75,9 @@ class _AuthorizationState extends State<Authorization> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/page/page_reg.png'),
-              fit: BoxFit.fill,
-            )),
+          image: AssetImage('assets/images/page/page_reg.png'),
+          fit: BoxFit.fill,
+        )),
         child: Center(
           child: Stack(
             children: <Widget>[
@@ -85,9 +107,11 @@ class _AuthorizationState extends State<Authorization> {
                 radius: 30,
                 onPressed: () {
                   if (checkVerCode()) {
-                    ns.isPhoneNumberInListSync(phoneNumber!).then((result)async {
+                    ns.isPhoneNumberInListSync(phoneNumber!).then((result) {
                       if (result == true) {
-                        await fetchIdBy();
+                        fetchUserIdByPhoneNumber();
+                        fetchPetIdByUser();
+                        fetchBalance();
                         Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         Navigator.pushReplacement(context, MaterialPageRoute(
