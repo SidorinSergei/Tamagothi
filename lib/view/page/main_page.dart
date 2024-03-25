@@ -22,19 +22,19 @@ class _HomePageState extends State<HomePage> {
 
   // Пример метода для обновления значений (может быть вызван, например, по таймеру или в ответ на действия пользователя)
   void _initializeData() async {
-    await ns.statesPet('purityPoints',petId!).then((result){
+    await ns.statesPet('purityPoints',PET_ID!).then((result){
       setState(() {
         purityValue = result!.toDouble();
         _isLoading = false; // Update the loading state
       });
     });
-   await ns.statesPet('starvationPoints',petId!).then((result){
+   await ns.statesPet('starvationPoints',PET_ID!).then((result){
       setState(() {
         foodValue = result!.toDouble();
         _isLoading1 = false; // Update the loading state
       });
     });
-    await ns.statesPet('moodPoints',petId!).then((result){
+    await ns.statesPet('moodPoints',PET_ID!).then((result){
       setState(() {
         moodValue = result!.toDouble();
         _isLoading2 = false; // Update the loading state

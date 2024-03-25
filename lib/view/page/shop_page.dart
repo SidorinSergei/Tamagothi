@@ -78,8 +78,9 @@ class _ShopPageState extends State<ShopPage> {
       );
       return;
     } else {
-      bool success = await ns.buySkin(int.parse(USER_ID!), index + 1);
-      if (!success) {
+      int skinPrice = prices[index];
+
+      if ((BALANCE! - skinPrice) >= 0) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Недостаточно средств для покупки скина!'),
@@ -87,7 +88,7 @@ class _ShopPageState extends State<ShopPage> {
           ),
         );
       } else {
-        int skinPrice = prices[index];
+        bool success = await ns.buySkin(int.parse(USER_ID!), index + 1);
         // Вычитаем стоимость скина из текущего баланса перед обновлением на сервере
         int updatedBalance = balance! - skinPrice;
         // Обновляем баланс на сервере с уже вычтенной стоимостью скина

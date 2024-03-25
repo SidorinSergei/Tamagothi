@@ -214,7 +214,6 @@ class NetworkService {
   Future<void> updateBalance(int id, int balance)async{
     final data = UserDetail(id: id, phoneNumber: PHONE_NUMBER!, balance: balance, name: "user", createdAt: DateTime(2024));
     await api.userProfilesIdPut(data: data, id: USER_ID);
-
   }
 
 }
