@@ -32,19 +32,16 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
     var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
     USER_ID = await user.id.toString();
     List<PetDetail> pets = await ns.fetchPetsData();
-    print('${USER_ID}');
+
   }
 
   Future<void> createUser() async {
     ns.createUserProfile(widget.phoneNumber!, widget.verCode!);
-    print('${ns.createUserProfile(widget.phoneNumber!, widget.verCode!)}+сука');
   }
 
   Future<void> fetchUserIdByPhoneNumber() async {
     List<UserDetail> users =
     await ns.fetchUserIdByPhoneNumberData(widget.phoneNumber!);
-    //print(users);
-    //print('${widget.phoneNumber}+rggg');
     var user = await users.firstWhere((element) => element.phoneNumber == widget.phoneNumber);
     USER_ID = await user.id.toString();
   }

@@ -29,6 +29,10 @@ class FoodPageController {
     }
   }
 
+  void addToStorage(FoodItemModel foodItem) {
+    foodItem.buy();
+  }
+
   void removeEmptyFoodItems() {
     list.removeWhere((item) => item.quantity == 0);
   }

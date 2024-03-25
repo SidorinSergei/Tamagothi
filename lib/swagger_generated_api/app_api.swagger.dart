@@ -2279,13 +2279,13 @@ class UserStorageFoodDetail {
   Map<String, dynamic> toJson() => _$UserStorageFoodDetailToJson(this);
 
   @JsonKey(name: 'id')
-  final int? id;
+  int? id;
   @JsonKey(name: 'count')
   int? count;
   @JsonKey(name: 'user')
-  final int? user;
+  int? user;
   @JsonKey(name: 'food')
-  final int? food;
+  int? food;
   static const fromJsonFactory = _$UserStorageFoodDetailFromJson;
 
   @override

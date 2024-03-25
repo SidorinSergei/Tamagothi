@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:tamagothi/presenter/global.dart';
 
 import "swagger_generated_api/app_api.swagger.dart";
 
@@ -159,6 +161,26 @@ class NetworkService {
     }
     return pets;
 
+  }
+
+  Future<bool> checkIfFileExists(String filePath) async {
+    try {
+      await rootBundle.load(filePath);
+      return true;
+    } catch (e) {
+      return false;
+    }
+
+  }
+
+  Future<void> buyFoodPost(UserStorageFoodDetail data, int price,) async {
+    await api.userStorageFoodIdPut(data: data, id: data.id.toString());
+  }
+
+  Future<bool> buySkin(int user,int skin) async{
+    final data = UserStorageSkinDetail(user: user,skin: skin);
+    final response = await api.userStorageSkinPost(data: data);
+    return response.isSuccessful;
   }
 
 }
