@@ -70,7 +70,6 @@ class _FoodPageState extends State<FoodPage> {
     userExistingStorageFoodData = userStorageFood
         .where((foodDetails) => foodDetails.user.toString() == USER_ID)
         .toList();
-    print(userExistingStorageFoodData.length);
     for (var foodData in userExistingStorageFoodData) {
       FoodDetail? userFood =
           foodDetails.firstWhere((element) => element.id == foodData.food);
@@ -101,6 +100,10 @@ class _FoodPageState extends State<FoodPage> {
     setState(() {
       _controller.addToStorage(item);
       ns.buyFoodPost(data, 0);
+      if ((BALANCE! - foodItem.price) >= 0) {
+        ns.updateBalance(int.parse(USER_ID!), (BALANCE! - foodItem.price));
+        BALANCE = (BALANCE! - foodItem.price);
+      }
     });
   }
 

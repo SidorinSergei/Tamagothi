@@ -211,10 +211,10 @@ class NetworkService {
     return skin;
   }
 
-  Future<int?> updateBalance(int id, int balance)async{
-    final data = await UserEditBalance(id: id,balance: balance);
-    final response = await api.userProfilesEditBalancePost(data: data);
-    return response.body!.balance;
+  Future<void> updateBalance(int id, int balance)async{
+    final data = UserDetail(id: id, phoneNumber: PHONE_NUMBER!, balance: balance, name: "user", createdAt: DateTime(2024));
+    await api.userProfilesIdPut(data: data, id: USER_ID);
+
   }
 
 }

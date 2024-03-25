@@ -52,6 +52,10 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
     PET_ID = await pet.id.toString();
   }
 
+  Future<void> _grandUserWithInitialFoodStorage() async {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -192,8 +196,8 @@ class _CharacterCreationPageState extends State<CharacterCreationPage> {
                 await us();
                 await  ns.createPet(nameController.text, int.parse(USER_ID!), int.parse(ageController.text), gender, null);
                 await fetchPetIdByUser();
-
-                  Navigator.pushReplacementNamed(context, '/home');
+                await _grandUserWithInitialFoodStorage();
+                Navigator.pushReplacementNamed(context, '/home');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.pink,

@@ -41,11 +41,28 @@ class _AuthorizationState extends State<Authorization> {
     return verCode == codeController.text;
   }
 
+  Future<int> balanceUs(List<UserDetail> userDetail,int balance) async{
+    for(var detail in userDetail){
+      if(detail.id == int.parse(USER_ID!)){
+        balance = detail.balance!;
+      }
+    }
+    return balance;
+  }
+
+
+  Future<void> fetchBalance() async {
+    List<UserDetail> response = await ns.userBalance();
+    BALANCE = await balanceUs(response, BALANCE!);
+  }
+
   @override
   void initState() {
     super.initState();
+    BALANCE = 0;
     verCode = widget.codeMessage?.split(" ")[2];
     phoneNumber = widget.codeMessage?.split(" ")[6];
+    PHONE_NUMBER = phoneNumber;
   }
 
 
@@ -94,6 +111,7 @@ class _AuthorizationState extends State<Authorization> {
                       if (result == true) {
                         fetchUserIdByPhoneNumber();
                         fetchPetIdByUser();
+                        fetchBalance();
                         Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         Navigator.pushReplacement(context, MaterialPageRoute(
