@@ -23,18 +23,13 @@ class _AuthorizationState extends State<Authorization> {
 
   NetworkService ns = NetworkService();
 
-  Future<void> fetchUserIdByPhoneNumber() async {
-    List<UserDetail> users =
-    await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
-    var user =
-    users.firstWhere((element) => element.phoneNumber == phoneNumber);
-    userId = user.id.toString();
-  }
-
-  Future<void> fetchPetIdByUser() async {
+  Future<void> fetchIdBy() async {
+    List<UserDetail> users = await ns.fetchUserIdByPhoneNumberData(phoneNumber!);
+    var user = await users.firstWhere((element) => element.phoneNumber == phoneNumber);
+    userId =await user.id.toString();
     List<PetDetail> pets = await ns.fetchPetsData();
-    var pet = pets.firstWhere((element) => element.user == int.parse(userId!));
-    petId = pet.id.toString();
+    var pet =await pets.firstWhere((element) => element.user == int.parse(userId!));
+    petId =await pet.id.toString();
   }
 
   bool checkVerCode() {
@@ -90,10 +85,9 @@ class _AuthorizationState extends State<Authorization> {
                 radius: 30,
                 onPressed: () {
                   if (checkVerCode()) {
-                    ns.isPhoneNumberInListSync(phoneNumber!).then((result) {
+                    ns.isPhoneNumberInListSync(phoneNumber!).then((result)async {
                       if (result == true) {
-                        fetchUserIdByPhoneNumber();
-                        fetchPetIdByUser();
+                        await fetchIdBy();
                         Navigator.pushReplacementNamed(context, '/home');
                       } else {
                         Navigator.pushReplacement(context, MaterialPageRoute(

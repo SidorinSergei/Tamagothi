@@ -199,7 +199,10 @@ class NetworkService {
   }
 
   Future<int?> updateBalance(int id, int balance)async{
+    //final data = await UserDetail(id: ,phoneNumber: ,balance: ,name: )
     final data = await UserEditBalance(id: id,balance: balance);
+
+    //api.userProfilesIdPut(data: data, id: id)
     final response = await api.userProfilesEditBalancePost(data: data);
     return response.body!.balance;
   }

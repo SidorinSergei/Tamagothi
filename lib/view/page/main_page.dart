@@ -1,8 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:tamagothi/presenter/global.dart';
 import 'package:tamagothi/view/widgets/scale.dart';
+import 'package:tamagothi/network_service.dart'; // Убедитесь, что у вас есть необходимый импорт для NetworkService
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  NetworkService ns = NetworkService(); // Экземпляр сервиса для работы с сетью
+
+  var foodValue;
+  var purityValue;
+  var moodValue;
+  bool _isLoading = true;
+
+  // Пример метода для обновления значений (может быть вызван, например, по таймеру или в ответ на действия пользователя)
+  void _initializeData() {
+    ns.statesPet('purityPoints',petId!).then((result){
+      setState(() {
+        purityValue = result!.toDouble();
+        _isLoading = false; // Update the loading state
+      });
+    });
+    ns.statesPet('starvationPoints',petId!).then((result){
+      setState(() {
+        foodValue = result!.toDouble();
+        _isLoading = false; // Update the loading state
+      });
+    });
+    ns.statesPet('moodPoints',petId!).then((result){
+      setState(() {
+        moodValue = result!.toDouble();
+        _isLoading = false; // Update the loading state
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +62,10 @@ class HomePage extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               Positioned(left: screenSize.width*0.095, top: screenSize.height*(-0.07), child: Image.asset('assets/pers/pers_1.png',width: screenSize.width*0.83,height: screenSize.height*0.83,),),
-              HealthScale(value:53,size: 0.23,leftSize: 0.06, topSize: 0.52,petImage: Image.asset('assets/images/food.png',width: screenSize.width*0.23,height: screenSize.height*0.23,),),
-              HealthScale(value:83,size: 0.23,leftSize: 0.385, topSize: 0.52,petImage: Image.asset('assets/images/washing.png', width: screenSize.width*0.23,height: screenSize.height*0.23,),),
-              HealthScale(value:13,size: 0.23,leftSize: 0.7, topSize: 0.52,petImage: Image.asset('assets/images/sleep.png', width: screenSize.width*0.23,height: screenSize.height*0.23,),),
-              //MyButtonStyle(path: 'assets/images/button_hz.png',  width: 0.85, height: 0.075,leftSize: 0.07, topSize: 0.74,radius: 50, onPressed: (){}),
-              //MyButtonStyle(path: 'assets/images/button_shop.png',  width: 0.85, height: 0.135,leftSize: 0.07, topSize: 0.84,radius: 50, onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context) => ShopPage()),);})
+              if(_isLoading==false)HealthScale(value: foodValue, size: 0.23, leftSize: 0.06, topSize: 0.52, petImage: Image.asset('assets/images/food.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
+              if(_isLoading==false)HealthScale(value: purityValue, size: 0.23, leftSize: 0.385, topSize: 0.52, petImage: Image.asset('assets/images/washing.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
+              if(_isLoading==false)HealthScale(value: moodValue, size: 0.23, leftSize: 0.7, topSize: 0.52, petImage: Image.asset('assets/images/sleep.png', width: screenSize.width*0.23, height: screenSize.height*0.23,),),
+              // Добавьте здесь другие виджеты, такие как кнопки для вызова _updateValues
             ],
           ),
         ),
